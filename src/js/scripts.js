@@ -44,42 +44,49 @@ scene.add( light );
 
 /* camera 1 */
 const camera1 = new THREE.PerspectiveCamera(
-    90,
-    250/250,
+    30,
+    panel1.clientHeight/panel1.clientWidth,
     0.1,
     1000
 );
-camera1.position.set( -0.02, -6.62, 2.7 );
+
+camera1.setViewOffset(750,750,0,0,panel1.clientHeight,panel1.clientWidth);
+camera1.position.set( -0.02, 0, 10  );
+
+
 
 /* camera 2 */
 
 const camera2 = new THREE.PerspectiveCamera(
-    90,
-    250/500,
+    30,
+    panel2.clientWidth/panel2.clientHeight,
     0.1,
     1000
 );
+camera2.setViewOffset(750,750,250,250,panel2.clientWidth,panel2.clientHeight);
 camera2.position.set( -0.02, 0, 10 );
 
 
 /* camera 3 */
 
 const camera3 = new THREE.PerspectiveCamera(
-    90,
-    500/250,
+    30,
+    panel3.clientHeight/panel3.clientWidth,
     0.1,
     1000
 );
-camera3.position.set( 3, 0, 7 );
+camera3.setViewOffset(750,750,250,0,panel3.clientWidth,panel3.clientHeight);
+camera3.position.set( -0.02, 0, 10 );
 
 
 //controls
 
 /* control 1 */
 const control1 = new OrbitControls( camera1, renderer1.domElement);
-control1.enableDamping = true;
 
 control1.addEventListener('change', () => {
+    console.log(camera1.rotation)
+    
     camera2.position.copy(camera1.position);
     camera3.position.copy(camera1.position);
     camera2.rotation.copy(camera1.rotation);
@@ -90,13 +97,28 @@ control1.addEventListener('change', () => {
 const control2 = new OrbitControls( camera2, renderer2.domElement);
 control2.enableDamping = true;
 
-
+control2.addEventListener('change', () => {
+    console.log(camera1.rotation)
+    
+    camera1.position.copy(camera2.position);
+    camera3.position.copy(camera2.position);
+    camera1.rotation.copy(camera2.rotation);
+    camera3.rotation.copy(camera2.rotation);
+})
 
 /* control 3 */
 
 const control3 = new OrbitControls( camera3, renderer3.domElement);
 control3.enableDamping = true;
 
+control3.addEventListener('change', () => {
+    console.log(camera1.rotation)
+    
+    camera2.position.copy(camera3.position);
+    camera1.position.copy(camera3.position);
+    camera2.rotation.copy(camera3.rotation);
+    camera1.rotation.copy(camera3.rotation);
+})
 
 //functions
 
