@@ -5,6 +5,9 @@ const panel1 = document.getElementById('panel1')
 const panel2 = document.getElementById('panel2')
 const panel3 = document.getElementById('panel3')
 
+const fullHeight = panel1.clientHeight + panel2.clientHeight
+const fullWidth = panel1.clientWidth + panel3.clientWidth
+
 
 //renderer
 
@@ -50,7 +53,7 @@ const camera1 = new THREE.PerspectiveCamera(
     1000
 );
 
-camera1.setViewOffset(750,750,0,0,panel1.clientHeight,panel1.clientWidth);
+camera1.setViewOffset(fullWidth,fullHeight,0,0,panel1.clientHeight,panel1.clientWidth);
 camera1.position.set( -0.02, 0, 10  );
 
 
@@ -63,7 +66,7 @@ const camera2 = new THREE.PerspectiveCamera(
     0.1,
     1000
 );
-camera2.setViewOffset(750,750,250,250,panel2.clientWidth,panel2.clientHeight);
+camera2.setViewOffset(fullWidth,fullHeight,250,250,panel2.clientWidth,panel2.clientHeight);
 camera2.position.set( -0.02, 0, 10 );
 
 
@@ -75,7 +78,7 @@ const camera3 = new THREE.PerspectiveCamera(
     0.1,
     1000
 );
-camera3.setViewOffset(750,750,250,0,panel3.clientWidth,panel3.clientHeight);
+camera3.setViewOffset(fullWidth,fullHeight,250,0,panel3.clientWidth,panel3.clientHeight);
 camera3.position.set( -0.02, 0, 10 );
 
 
@@ -129,7 +132,7 @@ control3.addEventListener('change', () => {
 const texturer = new THREE.TextureLoader();
 const sNormalColor = texturer.load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPX6DfAsj9ln5yS3gpgzyw6RdvreTTM4QVqetQ1EP7R0oSu-XzcZq7QFPZvieZy1br5l0&usqp=CAU")
 
-const sGeomnetry = new THREE.BoxGeometry(3,3,3)
+const sGeomnetry = new THREE.BoxGeometry(1,1,1)
 const sMaterial = new THREE.MeshStandardMaterial({
     map: sNormalColor,
 })
