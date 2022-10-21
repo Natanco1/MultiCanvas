@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
-const panel1 = document.getElementById('panel1')
+const panel2 = document.getElementById('panel2')
 
 const fullHeight = 750
 const fullWidth = 750
@@ -16,8 +16,8 @@ const fov = 30
 //renderer
 
 
-const renderer1 = new THREE.WebGLRenderer({ canvas: panel1});
-renderer1.setSize(panel1.clientHeight,panel1.clientWidth);
+const renderer2 = new THREE.WebGLRenderer({ canvas: panel2});
+renderer2.setSize(panel2.clientWidth,panel2.clientHeight);
 
 
 //scene
@@ -37,23 +37,23 @@ scene.add( light );
 //camera
 
 
-const camera1 = new THREE.PerspectiveCamera(
+const camera2 = new THREE.PerspectiveCamera(
     fov,
-    panel1.clientHeight/panel1.clientWidth,
+    panel2.clientWidth/panel2.clientHeight,
     0.1,
     1000
 );
 
-camera1.setViewOffset(fullWidth,fullHeight,0,0,panel1.clientHeight,panel1.clientWidth);
-camera1.position.set( cameraX, cameraY, cameraZ  );
+camera2.setViewOffset(fullWidth,fullHeight,250,250,panel2.clientWidth,panel2.clientHeight);
+camera2.position.set( cameraX, cameraY, cameraZ );
 
 
 //controls
 
 
-const control1 = new OrbitControls( camera1, renderer1.domElement);
-control1.enableDamping = true;
-control1.enablePan = false;
+const control2 = new OrbitControls( camera2, renderer2.domElement);
+control2.enableDamping = true;
+control2.enablePan = false;
 
 
 //functions
@@ -77,9 +77,9 @@ scene.add(sphere)
 
 function animate() {
 
-    control1.update();
-    renderer1.render(scene, camera1);
+    control2.update();
+    renderer2.render(scene, camera2)
     requestAnimationFrame(animate);
 }
 
-renderer1.setAnimationLoop(animate); 
+renderer2.setAnimationLoop(animate); 
