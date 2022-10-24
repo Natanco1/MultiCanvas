@@ -1,16 +1,16 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import * as THREE from 'https://cdn.skypack.dev/three';
+import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
 
-const panel1 = document.getElementById('panel1')
+const panel1 = document.getElementById('panel1');
 
-const fullHeight = 750
-const fullWidth = 750
+const fullHeight = 750;
+const fullWidth = 750;
 
-const cameraX = 0
-const cameraY = 0
-const cameraZ = 5
+const cameraX = 0;
+const cameraY = 0;
+const cameraZ = 5;
 
-const fov = 30
+const fov = 30;
 
 
 //renderer
@@ -62,14 +62,14 @@ control1.enablePan = false;
 //geometries
 /* palette: #0C0032 #190061 #240090 #3500D3 #282828 */
 const texturer = new THREE.TextureLoader();
-const sNormalColor = texturer.load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPX6DfAsj9ln5yS3gpgzyw6RdvreTTM4QVqetQ1EP7R0oSu-XzcZq7QFPZvieZy1br5l0&usqp=CAU")
+const sNormalColor = texturer.load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPX6DfAsj9ln5yS3gpgzyw6RdvreTTM4QVqetQ1EP7R0oSu-XzcZq7QFPZvieZy1br5l0&usqp=CAU");
 
 const sGeomnetry = new THREE.BoxGeometry(1,1,1)
 const sMaterial = new THREE.MeshStandardMaterial({
     map: sNormalColor,
 })
-const sphere = new THREE.Mesh(sGeomnetry,sMaterial)
-scene.add(sphere)
+const sphere = new THREE.Mesh(sGeomnetry,sMaterial);
+scene.add(sphere);
 
 
 //animate loop
