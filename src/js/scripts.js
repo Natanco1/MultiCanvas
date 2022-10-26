@@ -1,5 +1,9 @@
 import * as THREE from 'https://cdn.skypack.dev/three';
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
+let socket = io()
+socket.on('connect', () => {
+    console.log('mog1')
+})
 
 const panel1 = document.getElementById('panel1');
 

@@ -12,14 +12,6 @@
       <canvas id="panel1"></canvas>
     </div>
     <script src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript">
-      let socket = io()
-      socket.on('connect', () => {
-        socket.on('message', (data) => {
-          console.log(data + ' test')
-        })
-      })
-    </script>
     <script src="./js/scripts.js" type="module"></script> 
   </body>
 </html>

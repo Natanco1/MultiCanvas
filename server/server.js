@@ -11,7 +11,7 @@ let io = socketIO(server);
 
 io.on('connection', (socket)=> {
     io.send('hello websoket')
-    console.log('someone connected');
+    console.log(`socket of id ${socket.id} has just connected`);
 })
 
 app.use(express.static(publicPath))
