@@ -91,6 +91,10 @@ control1.addEventListener('change', () => {
     camera3.position.copy(camera1.position);
     camera2.rotation.copy(camera1.rotation);
     camera3.rotation.copy(camera1.rotation);
+    setInterval(socket.emit('update', {
+        pos1: camera1.position,
+        rot1: camera1.rotation,
+    }),5000)
 })
 
 

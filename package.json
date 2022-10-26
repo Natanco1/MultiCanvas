@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "nodemon server/server.js & bash shell/browser.sh",
+    "serve": "nodemon server/server.js",
+    "browse": "bash shell/browser.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
