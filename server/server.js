@@ -10,6 +10,8 @@ let io = socketIO(server);
 const {exec} = require('child_process');
 
 var clients = [];
+var position = [];
+var rotation = [];
 
 
 
@@ -26,7 +28,18 @@ io.on('connection', (socket) => {
     })
 
     socket.on('update', (message) =>{
-        clients.index
+        position.push(message.pos1)
+        rotation.push(message.rot1)
+        console.log('wep')
+        console.log(position[index])
+        console.log("sogget")
+        console.log(rotation[index])
+        /* console.log(clients.index.pos1)
+        console.log(clients.index.rot1)
+        console.log(clients.index.pos2)
+        console.log(clients.index.rot2)
+        console.log(clients.index.pos3)
+        console.log(clients.index.rot3) */
     })
 })
 

@@ -104,7 +104,6 @@ control2.addEventListener('change', () => {
     camera3.rotation.copy(camera2.rotation);
 })
 
-
 const control3 = new OrbitControls( camera3, renderer3.domElement);
 control3.enableDamping = true;
 control3.enablePan = false;
@@ -132,10 +131,13 @@ const sphere = new THREE.Mesh(sGeomnetry,sMaterial);
 scene.add(sphere);
 
 
+
+
 //animate loop
 
 
 function animate() {
+    
     control1.update();
     control2.update();
     control3.update();
