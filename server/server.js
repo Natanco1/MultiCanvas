@@ -15,15 +15,18 @@ var clients = [];
 
 io.on('connection', (socket) => {
     clients.push(socket);
-    console.log(`socket with id ${socket.id} has joined`)
-    socket.on('id',()=> {
-        console.log('socketers idsss')
-    })
+    var index = clients.indexOf(socket);
+    console.log(`C -> ${socket.id}: ${index}`)
+
 
     socket.on('disconnect', () => {
-        var i = clients.indexOf(socket);
-        clients.splice(i,1);
-        console.log(`socket with id ${socket.id} has disconnected`)
+        clients.splice(index,1);
+        console.log(`D <- ${socket.id}: ${index}`)
+        
+    })
+
+    socket.on('update', (message) =>{
+        clients.index
     })
 })
 
