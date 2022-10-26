@@ -1,7 +1,7 @@
 import * as THREE from 'https://cdn.skypack.dev/three';
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
-let socket = io()
-socket.on('connect', () => {
+let socket2 = io()
+socket2.on('connect', () => {
     console.log('mog2')
 })
 
