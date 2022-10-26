@@ -10,8 +10,8 @@ let server = http.createServer(app);
 let io = socketIO(server);
 
 io.on('connection', (socket)=> {
-    io.send('hello websoket')
-    console.log('someone connected');
+    window.location.href = `http://localhost:4000/${socket.id}`
+    console.log(`${socket.id}`);
 })
 
 app.use(express.static(publicPath))
