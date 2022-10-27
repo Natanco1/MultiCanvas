@@ -8,6 +8,8 @@ let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
 
+
+
 class Server {
     constructor(clients = {id, position, rotation}){
         this.clients = clients
@@ -19,11 +21,12 @@ let TheServer = new Server({})
 
 io.on('connection', (socket) => {
     TheServer.clients.id = socket.id
-    console.log(`C -> ${TheServer.clients.id}`)
+    console.log(`-> ${TheServer.clients.id}`)
 
 
     socket.on('disconnect', () => {
-        console.log(`D <- ${TheServer.clients.id}`)
+        TheServer.clients.id = socket.id
+        console.log(`<- ${TheServer.clients.id}`)
     })
 
     socket.on('serverUpdate', (message) =>{
