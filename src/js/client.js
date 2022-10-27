@@ -5,10 +5,6 @@ let socket = io()
 
 
 const panel1 = document.getElementById('panel1');
-
-const fullHeight = 750;
-const fullWidth = 750;
-
 const cameraX = 0;
 const cameraY = 0;
 const cameraZ = 5;
@@ -55,17 +51,16 @@ const control1 = new OrbitControls( camera1, renderer1.domElement);
 control1.enableDamping = true;
 control1.enablePan = false;
 control1.addEventListener('change', () => {
-    setInterval(socket.emit('serverUpdate', {
-        pos1: camera1.position,
-        rot1: camera1.rotation,
-    }),5000)
+    socket.emit('serverUpdate', {
+        position: camera1.position,
+        rotation: camera1.rotation,
+    })
 })
 
 socket.on('clientUpdate', (message) => {
-    camera1.position.copy(message.generalPosition)
-    camera1.rotation.copy(message.generalRotation)
+    camera1.position.copy(message.newPosition)
+    camera1.rotation.copy(message.newRotation)
 })
-
 //functions
 
 

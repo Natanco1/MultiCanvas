@@ -8,35 +8,32 @@ let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
 
-var clients = [];
-var position = [];
-var rotation = [];
+class Server {
+    constructor(clients = {id, position, rotation}){
+        this.clients = clients
+    }
+}
 
+let TheServer = new Server({})
 
 
 io.on('connection', (socket) => {
-    clients.push(socket);
-    var index = clients.indexOf(socket);
-    console.log(`C -> ${socket.id}: ${index}`)
+    TheServer.clients.id = socket.id
+    console.log(`C -> ${TheServer.clients.id}`)
 
 
     socket.on('disconnect', () => {
-        clients.splice(index,1);
-        console.log(`D <- ${socket.id}: ${index}`)
-        
+        console.log(`D <- ${TheServer.clients.id}`)
     })
 
     socket.on('serverUpdate', (message) =>{
-
-        position.push(message.pos1)
-        rotation.push(message.rot1)
-       /*  console.log('position')
-        console.log(position[index])
-        console.log('rotation:')
-        console.log(rotation[index]) */
+        TheServer.clients.position = message.position
+        TheServer.clients.rotation = message.rotation
+        console.log(`${TheServer.clients.position}`)
+        console.log(`${TheServer.clients.rotation}`)
         io.emit('clientUpdate', {
-            generalPosition: position[index],  
-            generalRotation: rotation[index],
+            newPosition: TheServer.clients.position,  
+            newRotation: TheServer.clients.rotation,
         })
     })
 })
