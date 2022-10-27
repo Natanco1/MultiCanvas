@@ -91,12 +91,16 @@ control1.addEventListener('change', () => {
     camera3.position.copy(camera1.position);
     camera2.rotation.copy(camera1.rotation);
     camera3.rotation.copy(camera1.rotation);
-    setInterval(socket.emit('update', {
+    setInterval(socket.emit('serverUpdate', {
         pos1: camera1.position,
         rot1: camera1.rotation,
     }),5000)
 })
 
+socket.on('clientUpdate', (message) => {
+    camera1.position.copy(message.generalPosition)
+    camera1.rotation.copy(message.generalRotation)
+})
 
 const control2 = new OrbitControls( camera2, renderer2.domElement);
 control2.enableDamping = true;
@@ -141,7 +145,7 @@ scene.add(sphere);
 
 
 function animate() {
-    
+
     control1.update();
     control2.update();
     control3.update();

@@ -7,7 +7,6 @@ const port = 4000
 let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
-const {exec} = require('child_process');
 
 var clients = [];
 var position = [];
@@ -27,13 +26,18 @@ io.on('connection', (socket) => {
         
     })
 
-    socket.on('update', (message) =>{
+    socket.on('serverUpdate', (message) =>{
+
         position.push(message.pos1)
         rotation.push(message.rot1)
-        console.log('position')
+       /*  console.log('position')
         console.log(position[index])
         console.log('rotation:')
-        console.log(rotation[index])
+        console.log(rotation[index]) */
+        io.emit('clientUpdate', {
+            generalPosition: position[index],  
+            generalRotation: rotation[index],
+        })
     })
 })
 
@@ -41,4 +45,5 @@ app.use(express.static(publicPath))
 
 server.listen(port, () => {
     console.log(`listening to ${port}`);
+    console.log(`access through: http://localhost:4000 or run command "npm run browse"`)
 })
