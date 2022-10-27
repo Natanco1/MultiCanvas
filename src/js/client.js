@@ -11,6 +11,11 @@ const cameraZ = 5;
 
 const fov = 30;
 
+const page = document.title
+const fullWidth = window.innerWidth
+const fullHeight = window.innerHeight
+const subWidth = fullWidth/3
+const subHeight = fullHeight/3
 
 //renderer
 
@@ -42,6 +47,13 @@ const camera1 = new THREE.PerspectiveCamera(
     1000
 );
 camera1.position.set(cameraX,cameraY,cameraZ)
+if (page == 1) {
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*0,subHeight,subWidth,subHeight)
+} else if (page == 2) {
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*1,subHeight,subWidth,subHeight)
+} else if (page == 3) {
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*2,subHeight,subWidth,subHeight)
+}
 
 
 //controls
