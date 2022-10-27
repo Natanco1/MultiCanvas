@@ -29,8 +29,6 @@ io.on('connection', (socket) => {
     socket.on('serverUpdate', (message) =>{
         TheServer.clients.position = message.position
         TheServer.clients.rotation = message.rotation
-        console.log(`${TheServer.clients.position}`)
-        console.log(`${TheServer.clients.rotation}`)
         io.emit('clientUpdate', {
             newPosition: TheServer.clients.position,  
             newRotation: TheServer.clients.rotation,
