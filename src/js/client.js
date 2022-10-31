@@ -5,24 +5,28 @@ socket.on('connect', () => {
     console.log('mog1')
 })
 
+let socket = io()
+
+
 const panel1 = document.getElementById('panel1');
-
-const fullHeight = 750;
-const fullWidth = 750;
-
 const cameraX = 0;
 const cameraY = 0;
 const cameraZ = 5;
+const screenNumber = 2;
 
 const fov = 30;
 
+const page = document.title
+const fullWidth = window.innerWidth
+const fullHeight = window.innerHeight
+const subWidth = fullWidth/screenNumber
+const subHeight = fullHeight/screenNumber
 
 //renderer
 
 
 const renderer1 = new THREE.WebGLRenderer({ canvas: panel1});
 renderer1.setSize(panel1.clientHeight,panel1.clientWidth);
-
 
 //scene
 
@@ -47,9 +51,14 @@ const camera1 = new THREE.PerspectiveCamera(
     0.1,
     1000
 );
-
-camera1.setViewOffset(fullWidth,fullHeight,0,0,panel1.clientHeight,panel1.clientWidth);
-camera1.position.set( cameraX, cameraY, cameraZ  );
+camera1.position.set(cameraX,cameraY,cameraZ)
+if (page == 1) {
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*0,subHeight/screenNumber,subWidth,subHeight)
+} else if (page == 2) {
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*1,subHeight/screenNumber,subWidth,subHeight)
+} else if (page == 3) {
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*2,subHeight/screenNumber,subWidth,subHeight)
+}
 
 
 //controls
@@ -58,8 +67,17 @@ camera1.position.set( cameraX, cameraY, cameraZ  );
 const control1 = new OrbitControls( camera1, renderer1.domElement);
 control1.enableDamping = true;
 control1.enablePan = false;
+control1.addEventListener('change', () => {
+    socket.emit('serverUpdate', {
+        position: camera1.position,
+        rotation: camera1.rotation,
+    })
+})
 
-
+socket.on('clientUpdate', (message) => {
+    camera1.position.copy(message.newPosition)
+    camera1.rotation.copy(message.newRotation)
+})
 //functions
 
 
@@ -74,6 +92,8 @@ const sMaterial = new THREE.MeshStandardMaterial({
 })
 const sphere = new THREE.Mesh(sGeomnetry,sMaterial);
 scene.add(sphere);
+
+
 
 
 //animate loop
