@@ -8,14 +8,15 @@ const panel1 = document.getElementById('panel1');
 const cameraX = 0;
 const cameraY = 0;
 const cameraZ = 5;
+const screenNumber = 2;
 
 const fov = 30;
 
 const page = document.title
 const fullWidth = window.innerWidth
 const fullHeight = window.innerHeight
-const subWidth = fullWidth/3
-const subHeight = fullHeight/3
+const subWidth = fullWidth/screenNumber
+const subHeight = fullHeight/screenNumber
 
 //renderer
 
@@ -48,11 +49,11 @@ const camera1 = new THREE.PerspectiveCamera(
 );
 camera1.position.set(cameraX,cameraY,cameraZ)
 if (page == 1) {
-    camera1.setViewOffset(fullWidth,fullHeight,subWidth*0,subHeight,subWidth,subHeight)
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*0,subHeight/screenNumber,subWidth,subHeight)
 } else if (page == 2) {
-    camera1.setViewOffset(fullWidth,fullHeight,subWidth*1,subHeight,subWidth,subHeight)
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*1,subHeight/screenNumber,subWidth,subHeight)
 } else if (page == 3) {
-    camera1.setViewOffset(fullWidth,fullHeight,subWidth*2,subHeight,subWidth,subHeight)
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*2,subHeight/screenNumber,subWidth,subHeight)
 }
 
 

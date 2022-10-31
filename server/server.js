@@ -43,5 +43,6 @@ app.use(express.static(publicPath))
 
 server.listen(port, () => {
     console.log(`listening to ${port}`);
-    console.log(`access through: http://localhost:4000 or run command "npm run browse"`)
+    console.log(`access through: http://localhost:4000`)
+    console.log('http://172.17.52.77:4000 or run command "npm run browse"')
 })
