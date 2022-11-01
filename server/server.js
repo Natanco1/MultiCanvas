@@ -22,7 +22,7 @@ let TheServer = new Server({})
 io.on('connection', (socket) => {
     TheServer.clients.id = socket.id
     console.log(`-> ${TheServer.clients.id}`)
-
+    io.emit('clientConnection')
 
     socket.on('disconnect', () => {
         TheServer.clients.id = socket.id

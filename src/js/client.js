@@ -8,15 +8,22 @@ const panel1 = document.getElementById('panel1');
 const cameraX = 0;
 const cameraY = 0;
 const cameraZ = 5;
-const screenNumber = 2;
+const screenNumber = 0;
 
 const fov = 30;
-
 const page = document.title
 const fullWidth = window.innerWidth
 const fullHeight = window.innerHeight
 const subWidth = fullWidth/screenNumber
 const subHeight = fullHeight/screenNumber
+
+
+//multipage creation
+socket.on('clientConnection',()=>{
+    window.history.replaceState('', '', 'http://localhost:4000'+`?${socket.id}`);
+    screenNumber+=1;
+})
+
 
 //renderer
 
@@ -71,6 +78,7 @@ control1.addEventListener('change', () => {
 })
 
 socket.on('clientUpdate', (message) => {
+    
     camera1.position.copy(message.newPosition)
     camera1.rotation.copy(message.newRotation)
 })
