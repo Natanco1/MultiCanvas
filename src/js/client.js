@@ -1,18 +1,16 @@
 import * as THREE from 'https://cdn.skypack.dev/three';
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
+//import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/loaders/GLTFLoader.js";
 let socket = io()
 socket.on('connect', () => {
     console.log('mog1')
 })
 
-let socket = io()
-
-
 const panel1 = document.getElementById('panel1');
 const cameraX = 0;
 const cameraY = 0;
 const cameraZ = 5;
-const screenNumber = 2;
+const screenNumber = 1;
 
 const fov = 30;
 
@@ -53,11 +51,11 @@ const camera1 = new THREE.PerspectiveCamera(
 );
 camera1.position.set(cameraX,cameraY,cameraZ)
 if (page == 1) {
-    camera1.setViewOffset(fullWidth,fullHeight,subWidth*0,subHeight/screenNumber,subWidth,subHeight)
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*0,subHeight*0.25,subWidth,subHeight)
 } else if (page == 2) {
-    camera1.setViewOffset(fullWidth,fullHeight,subWidth*1,subHeight/screenNumber,subWidth,subHeight)
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*1,subHeight,subWidth,subHeight)
 } else if (page == 3) {
-    camera1.setViewOffset(fullWidth,fullHeight,subWidth*2,subHeight/screenNumber,subWidth,subHeight)
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*2,subHeight,subWidth,subHeight)
 }
 
 
@@ -78,10 +76,17 @@ socket.on('clientUpdate', (message) => {
     camera1.position.copy(message.newPosition)
     camera1.rotation.copy(message.newRotation)
 })
-//functions
 
+
+//3d loader
+/* const greatLoader = new GLTFLoader();
+greatLoader.load('../assets/game_ready_mechanical-grasshopper.glb', (gltf)=> {
+    scene.add(gltf.scene);
+})
+ */
 
 //geometries
+
 /* palette: #0C0032 #190061 #240090 #3500D3 #282828 */
 const texturer = new THREE.TextureLoader();
 const sNormalColor = texturer.load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPX6DfAsj9ln5yS3gpgzyw6RdvreTTM4QVqetQ1EP7R0oSu-XzcZq7QFPZvieZy1br5l0&usqp=CAU");
