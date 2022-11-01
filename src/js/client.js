@@ -5,7 +5,6 @@ socket.on('connect', () => {
     console.log('mog1')
 })
 
-let socket = io()
 
 
 const panel1 = document.getElementById('panel1');
