@@ -1,5 +1,6 @@
-import * as THREE from 'https://cdn.skypack.dev/three';
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.module.js";
+import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/loaders/GLTFLoader.js";
 
 let socket = io()
 
@@ -50,44 +51,49 @@ scene.add( light );
 
 const camera1 = new THREE.PerspectiveCamera(
     fov,
-    panel1.clientHeight/panel1.clientWidth,
+    panel1.clientWidth/panel1.clientHeight,
     0.1,
     1000
 );
 camera1.position.set(cameraX,cameraY,cameraZ)
-if (page == 1) {
-    camera1.setViewOffset(fullWidth,fullHeight,subWidth*0,subHeight/screenNumber,subWidth,subHeight)
+/* if (page == 1) {
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*0,subHeight,subWidth,subHeight)
 } else if (page == 2) {
     camera1.setViewOffset(fullWidth,fullHeight,subWidth*1,subHeight/screenNumber,subWidth,subHeight)
 } else if (page == 3) {
     camera1.setViewOffset(fullWidth,fullHeight,subWidth*2,subHeight/screenNumber,subWidth,subHeight)
 }
-
+ */
 
 //controls
 
 
 const control1 = new OrbitControls( camera1, renderer1.domElement);
 control1.enableDamping = true;
-control1.enablePan = false;
+/* control1.enablePan = false; */
 control1.addEventListener('change', () => {
-    socket.emit('serverUpdate', {
+    setInterval(socket.emit('serverUpdate', {
         position: camera1.position,
         rotation: camera1.rotation,
-    })
+    }),500)
 })
 
-socket.on('clientUpdate', (message) => {
-    
+socket.on('clientUpdate', setInterval((message) => {
     camera1.position.copy(message.newPosition)
     camera1.rotation.copy(message.newRotation)
-})
-//functions
+},500))
 
+
+//objects
+const gltf = new GLTFLoader();
+gltf.load('../assets/scene.gltf', (gltfScene) => {
+    
+    scene.add(gltfScene.scene);
+});
 
 //geometries
 /* palette: #0C0032 #190061 #240090 #3500D3 #282828 */
-const texturer = new THREE.TextureLoader();
+/* const texturer = new THREE.TextureLoader();
 const sNormalColor = texturer.load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPX6DfAsj9ln5yS3gpgzyw6RdvreTTM4QVqetQ1EP7R0oSu-XzcZq7QFPZvieZy1br5l0&usqp=CAU");
 
 const sGeomnetry = new THREE.BoxGeometry(1,1,1)
@@ -96,8 +102,7 @@ const sMaterial = new THREE.MeshStandardMaterial({
 })
 const sphere = new THREE.Mesh(sGeomnetry,sMaterial);
 scene.add(sphere);
-
-
+ */
 
 
 //animate loop
