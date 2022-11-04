@@ -8,7 +8,7 @@ const panel1 = document.getElementById('panel1');
 const cameraX = 0;
 const cameraY = 0;
 const cameraZ = 5;
-const screenNumber = 0;
+let screenNumber = 2;
 
 const fov = 30;
 const page = document.title
