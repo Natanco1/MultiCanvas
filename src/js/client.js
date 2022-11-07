@@ -12,18 +12,18 @@ const cameraZ = 5;
 let screenNumber = 2;
 
 const fov = 30;
-const page = document.title
-const fullWidth = window.innerWidth
-const fullHeight = window.innerHeight
-const subWidth = fullWidth/screenNumber
-const subHeight = fullHeight/screenNumber
+const page = document.title;
+const fullWidth = window.innerWidth;
+const fullHeight = window.innerHeight;
+const subWidth = fullWidth/screenNumber;
+const subHeight = fullHeight/screenNumber;
 
 
 //multipage creation
-socket.on('clientConnection',()=>{
+/* socket.on('clientConnection',()=>{
     window.history.replaceState('', '', 'http://localhost:4000'+`?${socket.id}`);
     screenNumber+=1;
-})
+}) */
 
 
 //renderer
@@ -31,6 +31,7 @@ socket.on('clientConnection',()=>{
 
 const renderer1 = new THREE.WebGLRenderer({ canvas: panel1});
 renderer1.setSize(panel1.clientHeight,panel1.clientWidth);
+
 
 //scene
 
@@ -56,32 +57,32 @@ const camera1 = new THREE.PerspectiveCamera(
     1000
 );
 camera1.position.set(cameraX,cameraY,cameraZ)
-/* if (page == 1) {
-    camera1.setViewOffset(fullWidth,fullHeight,subWidth*0,subHeight,subWidth,subHeight)
+if (page == 1) {
+    camera1.setViewOffset(fullWidth,fullHeight,subWidth*0,subHeight/screenNumber,subWidth,subHeight)
 } else if (page == 2) {
     camera1.setViewOffset(fullWidth,fullHeight,subWidth*1,subHeight/screenNumber,subWidth,subHeight)
 } else if (page == 3) {
     camera1.setViewOffset(fullWidth,fullHeight,subWidth*2,subHeight/screenNumber,subWidth,subHeight)
 }
- */
+
 
 //controls
 
 
 const control1 = new OrbitControls( camera1, renderer1.domElement);
 control1.enableDamping = true;
-/* control1.enablePan = false; */
+control1.enablePan = false;
 control1.addEventListener('change', () => {
-    setInterval(socket.emit('serverUpdate', {
+    socket.emit('serverUpdate', {
         position: camera1.position,
         rotation: camera1.rotation,
-    }),500)
+    })
 })
 
-socket.on('clientUpdate', setInterval((message) => {
+socket.on('clientUpdate', (message) => {
     camera1.position.copy(message.newPosition)
     camera1.rotation.copy(message.newRotation)
-},500))
+})
 
 
 //objects
