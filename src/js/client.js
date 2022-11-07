@@ -9,21 +9,22 @@ const panel1 = document.getElementById('panel1');
 const cameraX = 0;
 const cameraY = 0;
 const cameraZ = 5;
-let screenNumber = 2;
 
 const fov = 30;
-const page = document.title;
+let clientAmount;
 const fullWidth = window.innerWidth;
 const fullHeight = window.innerHeight;
-const subWidth = fullWidth/screenNumber;
-const subHeight = fullHeight/screenNumber;
 
 
 //multipage creation
-/* socket.on('clientConnection',()=>{
+socket.on('clientConnection',(message)=>{
+    clientAmount = message.connectedC;
     window.history.replaceState('', '', 'http://localhost:4000'+`?${socket.id}`);
-    screenNumber+=1;
-}) */
+    console.log(clientAmount)
+})
+
+
+
 
 
 //renderer
@@ -56,14 +57,13 @@ const camera1 = new THREE.PerspectiveCamera(
     0.1,
     1000
 );
-camera1.position.set(cameraX,cameraY,cameraZ)
-if (page == 1) {
-    camera1.setViewOffset(fullWidth,fullHeight,subWidth*0,subHeight/screenNumber,subWidth,subHeight)
-} else if (page == 2) {
-    camera1.setViewOffset(fullWidth,fullHeight,subWidth*1,subHeight/screenNumber,subWidth,subHeight)
-} else if (page == 3) {
-    camera1.setViewOffset(fullWidth,fullHeight,subWidth*2,subHeight/screenNumber,subWidth,subHeight)
+camera1.position.set(cameraX,cameraY,cameraZ);
+if(clientAmount > 1 ){
+    camera1.setViewOffset(fullWidth,fullHeight,fullWidth*clientAmount,0,fullWidth/clientAmount,fullHeight/clientAmount)
 }
+
+ 
+
 
 
 //controls

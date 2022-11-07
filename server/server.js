@@ -8,10 +8,10 @@ let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
 
-
+let connected = 0;
 
 class Server {
-    constructor(clients = {id, position, rotation}){
+    constructor(clients = {id, position, rotation, number}){
         this.clients = clients
     }
 }
@@ -22,11 +22,19 @@ let TheServer = new Server({})
 io.on('connection', (socket) => {
     TheServer.clients.id = socket.id
     console.log(`-> ${TheServer.clients.id}`)
-    io.emit('clientConnection')
+    connected++;
+    TheServer.clients.number = connected;
+    io.emit('clientConnection', {
+        connectedC: connected
+    })
 
     socket.on('disconnect', () => {
         TheServer.clients.id = socket.id
         console.log(`<- ${TheServer.clients.id}`)
+        connected--;
+        io.emit('clientConnection', {
+            connectedC: connected
+        })
     })
 
     socket.on('serverUpdate', (message) =>{
