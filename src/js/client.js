@@ -73,10 +73,12 @@ const control1 = new OrbitControls( camera1, renderer1.domElement);
 control1.enableDamping = true;
 control1.enablePan = false;
 control1.addEventListener('change', () => {
-    socket.emit('serverUpdate', {
-        position: camera1.position,
-        rotation: camera1.rotation,
-    })
+    setTimeout(()=> {
+        socket.emit('serverUpdate', {
+            position: camera1.position,
+            rotation: camera1.rotation,
+        })
+    },50)
 })
 
 socket.on('clientUpdate', (message) => {
