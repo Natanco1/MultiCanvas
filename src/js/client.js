@@ -73,12 +73,10 @@ const control1 = new OrbitControls( camera1, renderer1.domElement);
 control1.enableDamping = true;
 control1.enablePan = false;
 control1.addEventListener('change', () => {
-    setTimeout(()=> {
-        socket.emit('serverUpdate', {
-            position: camera1.position,
-            rotation: camera1.rotation,
-        })
-    },50)
+    socket.emit('serverUpdate', {
+        position: camera1.position,
+        rotation: camera1.rotation,
+    })
 })
 
 socket.on('clientUpdate', (message) => {
@@ -112,10 +110,8 @@ scene.add(sphere);
 
 
 function animate() {
-
     control1.update();
     renderer1.render(scene, camera1);
-    requestAnimationFrame(animate);
 }
 
 renderer1.setAnimationLoop(animate); 
