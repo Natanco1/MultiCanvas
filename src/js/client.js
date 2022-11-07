@@ -1,6 +1,5 @@
 import * as THREE from 'https://cdn.skypack.dev/three';
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
-//import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/loaders/GLTFLoader.js";
 let socket = io()
 socket.on('connect', () => {
     console.log('mog1')
@@ -78,13 +77,6 @@ socket.on('clientUpdate', (message) => {
     camera1.rotation.copy(message.newRotation)
 })
 
-
-//3d loader
-/* const greatLoader = new GLTFLoader();
-greatLoader.load('../assets/game_ready_mechanical-grasshopper.glb', (gltf)=> {
-    scene.add(gltf.scene);
-})
- */
 
 //geometries
 
