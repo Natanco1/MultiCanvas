@@ -8,6 +8,7 @@ let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
 
+
 let connected = 0;
 
 class Server {
@@ -51,6 +52,6 @@ app.use(express.static(publicPath))
 
 server.listen(port, () => {
     console.log(`listening to ${port}`);
-    console.log(`access through: http://localhost:4000`)
+    console.log(`access through: http://localhost:4000/canvases.html`)
     console.log('http://172.17.52.77:4000 or run command "npm run browse"')
 })
