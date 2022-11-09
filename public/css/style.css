@@ -3,6 +3,10 @@
   margin: 0;
 }
 
+body{
+  width: 100vw!important;
+  height: 100vh!important;
+}
 
 
 #panel1 {
