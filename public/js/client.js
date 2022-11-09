@@ -58,9 +58,8 @@ const camera1 = new THREE.PerspectiveCamera(
     1000
 );
 camera1.position.set(cameraX,cameraY,cameraZ);
-if(clientAmount > 1 ){
-    camera1.setViewOffset(fullWidth,fullHeight,fullWidth*clientAmount,0,fullWidth/clientAmount,fullHeight/clientAmount)
-}
+
+
 
  
 
