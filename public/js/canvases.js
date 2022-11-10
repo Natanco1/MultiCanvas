@@ -28,11 +28,15 @@ canvas.on({
 });
   
 function moved(obj){
-    console.log(obj.target) 
+
 }
 
 function resized(obj){
-    console.log(obj)
+    var width = obj.target.scaleX*obj.target.width
+    var height = obj.target.scaleY*obj.target.height
+    console.log(width)
+    console.log(height)
+
 }
 
 canvas.add(red);
