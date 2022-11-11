@@ -8,8 +8,23 @@ body{
   height: 100vh!important;
 }
 
+#showInfoButton, #hideInfoButton{
+  position: absolute;
+  top: 75%;
+  left: 50%;
+}
 
 #panel1 {
   width: 100vw!important;
   height: 100vh!important;
+}
+
+#display{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 15%;
+  left: 90%;
+  outline: auto;
+  outline-color: black;
 }
