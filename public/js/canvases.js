@@ -5,7 +5,7 @@ const canvas = new fabric.Canvas('mog', {
     height: document.documentElement.clientHeight
 });
 
-var objects = canvas._objects
+
 const newObject = document.getElementById("addButton");
 newObject.addEventListener('click', ()=>{
     var r = Math.floor(Math.random()*250)+5
@@ -16,11 +16,15 @@ newObject.addEventListener('click', ()=>{
         id: name,
         left: 10,
         top: 10,
-        width: Math.floor(Math.random()*200)+10,
-        height: Math.floor(Math.random()*200)+10,
+        width: Math.floor(Math.random()*300)+10,
+        height: Math.floor(Math.random()*300)+10,
         fill: `rgba(${r},${g},${b},1)`
     })
+    if(rectangle.id === ''){
+        rectangle.id = canvas._objects.length+1
+    }
     canvas.add(rectangle)
+    console.log(rectangle.id)
 })
 
 
