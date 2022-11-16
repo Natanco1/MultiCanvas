@@ -8,16 +8,18 @@ body{
   height: 100vh!important;
 }
 
-#showInfoButton, #hideInfoButton{
-  position: absolute;
-  top: 75%;
-  left: 50%;
+#addButton{
+  top: 80%;
+  left: 55%;
 }
 
 #uploadButton{
-  position: absolute;
   top: 80%;
-  left: 50%;
+  left: 45%;
+}
+
+.button{
+  position: absolute;
 }
 
 #panel1 {
@@ -33,4 +35,11 @@ body{
   left: 90%;
   outline: auto;
   outline-color: black;
+}
+
+#buttons {
+  display: flex;
+  position: absolute;
+  top: 80%;
+  left: 50%;
 }

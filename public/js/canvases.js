@@ -1,8 +1,3 @@
-var positionX;
-var positionY;
-var width;
-var height;
-var name;
 let fabricSocket = io()
 
 const canvas = new fabric.Canvas('mog', {
@@ -11,22 +6,26 @@ const canvas = new fabric.Canvas('mog', {
 });
 
 var objects = canvas._objects
-
-const show = document.getElementById("showInfoButton");
-show.addEventListener('click',()=>{
-    objects.forEach((objectElement)=>{
-        const HTMLDisplay = document.createElement("div")
-        HTMLDisplay.setAttribute("class","HTMLDisplay")
-        const lineBreak = document.createElement("br")
-        HTMLDisplay.innerHTML = `<div id="name"> name: ${objectElement.id}</div> <br> <div id="x">x: ${objectElement.top}</div> <br> <div id="y">y: ${objectElement.left}</div> <br> <div id="width">width: ${objectElement.width}</div> <br> <div id="height">height: ${objectElement.height}</div>`
-        document.getElementById("display").appendChild(HTMLDisplay)
-        document.getElementById("display").appendChild(lineBreak)
+const newObject = document.getElementById("addButton");
+newObject.addEventListener('click', ()=>{
+    var r = Math.floor(Math.random()*250)+5
+    var g = Math.floor(Math.random()*250)+5
+    var b = Math.floor(Math.random()*250)+5
+    var name = window.prompt("name of object")
+    const rectangle = new fabric.Rect({
+        id: name,
+        left: 10,
+        top: 10,
+        width: Math.floor(Math.random()*200)+10,
+        height: Math.floor(Math.random()*200)+10,
+        fill: `rgba(${r},${g},${b},1)`
     })
-    show.remove()
+    canvas.add(rectangle)
 })
 
-const up = document.getElementById("uploadButton");
-up.addEventListener('click',()=>{
+
+const upLoad = document.getElementById("uploadButton");
+upLoad.addEventListener('click',()=>{
     fabricSocket.emit("canvasInfo",{
         posX: positionX,
         posY: positionY,
@@ -35,45 +34,25 @@ up.addEventListener('click',()=>{
     })
 })
 
-const cyan = new fabric.Rect({
-    id: 'cyan',
-    left: 10,
-    top: 10,
-    width: 100,
-    height: 100,
-    fill: 'cyan'
-});
-
-const blue = new fabric.Rect({
-    id: 'blue',
-    left: 150,
-    top: 150,
-    width: 100,
-    height: 100,
-    fill: 'blue'
-});
-
+const hName = document.getElementById("name")
+const hX = document.getElementById("x")
+const hY = document.getElementById("y")
+const hWidth = document.getElementById("width")
+const hHeight = document.getElementById("height") 
 
 canvas.on({
-    'object:moving': moved,
-    'object:scaling': resized,
+    'object:moving': change,
+    'object:scaling': change,
+    'mouse:over': change
 });
   
-function moved(obj){
-    name = obj.target.id
-    positionX = obj.target.left
-    positionY = obj.target.top
-    
+function change(obj){
+    hName.innerHTML = `name: ${obj.target.id}`
+    hX.innerHTML = `x: ${obj.target.left.toFixed(3)}`
+    hY.innerHTML = `y: ${obj.target.top.toFixed(3)}`
+    hWidth.innerHTML = `width: ${(obj.target.scaleX*obj.target.width).toFixed(3)}`
+    hHeight.innerHTML = `height: ${(obj.target.scaleY*obj.target.height).toFixed(3)}`    
 }
 
-function resized(obj){
-    name = obj.target.id
-    width = obj.target.scaleX*obj.target.width
-    height = obj.target.scaleY*obj.target.height
-}
-
-
-canvas.add(cyan);
-canvas.add(blue);
 
 canvas.renderAll();

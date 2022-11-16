@@ -9,9 +9,19 @@
 </head>
 <body>
     <canvas id="mog"></canvas>
-    <input type="button" value="show info" id="showInfoButton">
-    <input type="button" value="upload" id="uploadButton">
-    <div id="display"></div>
+    <input type="button" value="add object" class="button" id="addButton">
+    <input type="button" value="upload" id="uploadButton" class="button">
+    <div id="display">
+        <div id="name"></div>
+        <br>
+        <div id="x"></div>
+        <br>
+        <div id="y"></div>
+        <br>
+        <div id="width"></div>
+        <br>
+        <div id="height"></div>
+    </div>
 
     <script src="lib/fabric.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
