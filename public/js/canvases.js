@@ -3,6 +3,7 @@ var positionY;
 var width;
 var height;
 var name;
+let fabricSocket = io()
 
 const canvas = new fabric.Canvas('mog', {
     width: document.documentElement.clientWidth,
@@ -17,12 +18,22 @@ show.addEventListener('click',()=>{
         const HTMLDisplay = document.createElement("div")
         HTMLDisplay.setAttribute("class","HTMLDisplay")
         const lineBreak = document.createElement("br")
-        HTMLDisplay.innerHTML = 'name:' + objectElement.id + '<br>x:' +objectElement.top+ '<br>y:' + objectElement.left+ '<br>width:' +objectElement.width+ '<br>height:' +objectElement.height
+        HTMLDisplay.innerHTML = `<div id="name"> name: ${objectElement.id}</div> <br> <div id="x">x: ${objectElement.top}</div> <br> <div id="y">y: ${objectElement.left}</div> <br> <div id="width">width: ${objectElement.width}</div> <br> <div id="height">height: ${objectElement.height}</div>`
         document.getElementById("display").appendChild(HTMLDisplay)
         document.getElementById("display").appendChild(lineBreak)
     })
+    show.remove()
 })
 
+const up = document.getElementById("uploadButton");
+up.addEventListener('click',()=>{
+    fabricSocket.emit("canvasInfo",{
+        posX: positionX,
+        posY: positionY,
+        canvasWidth: width,
+        canvasHeight: height,
+    })
+})
 
 const cyan = new fabric.Rect({
     id: 'cyan',
@@ -52,10 +63,6 @@ function moved(obj){
     name = obj.target.id
     positionX = obj.target.left
     positionY = obj.target.top
-/*     console.log('-----------')
-    console.log(`${name}`)
-    console.log(`position X: ${positionX}`)
-    console.log(`position Y: ${positionY}`) */
     
 }
 
@@ -63,18 +70,10 @@ function resized(obj){
     name = obj.target.id
     width = obj.target.scaleX*obj.target.width
     height = obj.target.scaleY*obj.target.height
-   /*  console.log('-----------')
-    console.log(`${name}`)
-    console.log(`width: ${width}`)
-    console.log(`height: ${height}`) */
 }
 
 
 canvas.add(cyan);
 canvas.add(blue);
-
-
-
-
 
 canvas.renderAll();

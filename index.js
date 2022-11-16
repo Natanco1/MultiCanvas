@@ -22,6 +22,8 @@ let TheServer = new Server({})
 
 io.on('connection', (socket) => {
     TheServer.clients.id = socket.id
+    console.log("")
+    console.log(`from : '${socket.request.headers.referer}'`)
     console.log(`-> ${TheServer.clients.id}`)
     connected++;
     TheServer.clients.number = connected;
@@ -46,6 +48,11 @@ io.on('connection', (socket) => {
             newRotation: TheServer.clients.rotation,
         })
     })
+})
+
+
+io.on("canvasInfo",(message)=>{
+    console.log("hewo")
 })
 
 app.use(express.static(publicPath))
