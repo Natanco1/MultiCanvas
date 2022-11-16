@@ -11,9 +11,8 @@ newObject.addEventListener('click', ()=>{
     var r = Math.floor(Math.random()*250)+5
     var g = Math.floor(Math.random()*250)+5
     var b = Math.floor(Math.random()*250)+5
-    var name = window.prompt("name of object")
     const rectangle = new fabric.Rect({
-        id: name,
+        id: '',
         left: 10,
         top: 10,
         width: Math.floor(Math.random()*300)+10,
@@ -30,12 +29,11 @@ newObject.addEventListener('click', ()=>{
 
 const upLoad = document.getElementById("uploadButton");
 upLoad.addEventListener('click',()=>{
-    fabricSocket.emit("canvasInfo",{
-        posX: positionX,
-        posY: positionY,
-        canvasWidth: width,
-        canvasHeight: height,
-    })
+    const group = new fabric.Group(canvas._objects)
+    console.log(group)
+    /* fabricSocket.emit("canvasInfo",{
+        //
+    }) */ 
 })
 
 const hName = document.getElementById("name")
