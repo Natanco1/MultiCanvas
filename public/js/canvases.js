@@ -51,11 +51,16 @@ canvas.on({
 });
   
 function change(obj){
-    hName.innerHTML = `name: ${obj.target.id}`
-    hX.innerHTML = `x: ${obj.target.left.toFixed(3)}`
-    hY.innerHTML = `y: ${obj.target.top.toFixed(3)}`
-    hWidth.innerHTML = `width: ${(obj.target.scaleX*obj.target.width).toFixed(3)}`
-    hHeight.innerHTML = `height: ${(obj.target.scaleY*obj.target.height).toFixed(3)}`    
+    if(obj.target === null){
+        void(0)
+    } else {
+        hName.innerHTML = `name: ${obj.target.id}`
+        hX.innerHTML = `x: ${obj.target.left.toFixed(3)}`
+        hY.innerHTML = `y: ${obj.target.top.toFixed(3)}`
+        hWidth.innerHTML = `width: ${(obj.target.scaleX*obj.target.width).toFixed(3)}`
+        hHeight.innerHTML = `height: ${(obj.target.scaleY*obj.target.height).toFixed(3)}`
+    }
+        
 }
 
 
