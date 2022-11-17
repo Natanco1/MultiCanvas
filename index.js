@@ -12,7 +12,7 @@ let x;
 let y;
 let w;
 let h;
-
+let objects;
 let connected = 0;
 
 class Server {
@@ -35,12 +35,14 @@ io.on('connection', (socket) => {
         y = message.y 
         w = message.w
         h = message.h
+        objects = message.objects
     })
     io.emit('clientConnection', {
         totX:x, 
         totY:y,
         totW:w,
         totH:h,
+        totGroup:objects
     })
 
     socket.on('disconnect', () => {

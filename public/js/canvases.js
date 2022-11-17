@@ -29,13 +29,14 @@ newObject.addEventListener('click', ()=>{
 
 const upLoad = document.getElementById("uploadButton");
 upLoad.addEventListener('click',()=>{
-    /* const group = new fabric.Group(canvas._objects) */
+    const group = new fabric.Group(canvas._objects)
     const info = canvas.getActiveObject()
     socket.emit('canvasInfo',{
         x: info.left,
         y: info.top,
         w: info.width,
-        h: info.height
+        h: info.height,
+        objects: group
     })    
     location.assign('http://localhost:4000')
 })
