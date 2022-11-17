@@ -22,10 +22,13 @@ body{
   position: absolute;
 }
 
-/* #panel1 {
-  width: 100vw!important;
-  height: 100vh!important;
-} */
+.container {
+  position: absolute;
+}
+
+#panel1 {
+  position: relative;
+}
 
 #display{
   display: flex;

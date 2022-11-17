@@ -5,31 +5,50 @@ import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.121.1/examples/
 let socket = io()
 
 
-const panel1 = document.getElementById('panel1');
+
 const cameraX = 0;
 const cameraY = 0;
 const cameraZ = 5;
-
-
+let x;
+let y;
+let w;
+let h;
 const fov = 30;
-let clientAmount;
 const fullWidth = window.innerWidth;
 const fullHeight = window.innerHeight;
-
-
-//multipage creation
+const container = document.createElement('div')
+container.setAttribute('class','container')
+const panel1 = document.createElement('canvas')
+panel1.setAttribute('id','panel1')
+document.body.appendChild(container)
+container.appendChild(panel1)
+//page creation
 socket.on('clientConnection',(message)=>{
-    clientAmount = message.connectedC;
     window.history.replaceState('', '', 'http://localhost:4000'+`?${socket.id}`);
-    console.log(clientAmount)
+    x = message.totX
+    y = message.totY
+    w = message.totW
+    h = message.totH
+   
+    panel1.style.width = `${w}px`
+    panel1.style.height = `${h}px` 
+    panel1.style.left = `${x}px` 
+    panel1.style.top = `${y}px` 
+    console.log(x)
+    console.log(panel1.left)
+    console.log('')
+    console.log(y)
+    console.log(panel1.top)
+    console.log('')
+    console.log(w)
+    console.log(panel1.width)
+    console.log('')
+    console.log(h)
+    console.log(panel1.height)
+    console.log('')
 })
 
-
-
-
-
 //renderer
-
 
 const renderer1 = new THREE.WebGLRenderer({ canvas: panel1});
 renderer1.setSize(panel1.clientHeight,panel1.clientWidth);
