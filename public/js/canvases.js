@@ -1,4 +1,4 @@
-let fabricSocket = io()
+let socket = io()
 
 const canvas = new fabric.Canvas('mog', {
     width: document.documentElement.clientWidth,
@@ -29,11 +29,15 @@ newObject.addEventListener('click', ()=>{
 
 const upLoad = document.getElementById("uploadButton");
 upLoad.addEventListener('click',()=>{
-    const group = new fabric.Group(canvas._objects)
-    console.log(group)
-    /* fabricSocket.emit("canvasInfo",{
-        //
-    }) */ 
+    /* const group = new fabric.Group(canvas._objects) */
+    const info = canvas.getActiveObject()
+    socket.emit('canvasInfo',{
+        x: info.left,
+        y: info.top,
+        w: info.width,
+        h: info.height
+    })    
+    location.assign('http://localhost:4000')
 })
 
 const hName = document.getElementById("name")
@@ -58,7 +62,7 @@ function change(obj){
         hWidth.innerHTML = `width: ${(obj.target.scaleX*obj.target.width).toFixed(3)}`
         hHeight.innerHTML = `height: ${(obj.target.scaleY*obj.target.height).toFixed(3)}`
     }
-        
+    
 }
 
 

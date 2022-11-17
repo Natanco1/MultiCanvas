@@ -23,7 +23,6 @@ let TheServer = new Server({})
 io.on('connection', (socket) => {
     TheServer.clients.id = socket.id
     console.log("")
-    console.log(`from : '${socket.request.headers.referer}'`)
     console.log(`-> ${TheServer.clients.id}`)
     connected++;
     TheServer.clients.number = connected;
@@ -48,17 +47,20 @@ io.on('connection', (socket) => {
             newRotation: TheServer.clients.rotation,
         })
     })
+    socket.on('canvasInfo',(message)=>{
+        io.emit('newCanvas',{
+            x: message.x,
+            y: message.y,
+            w: message.w,
+            h: message.h,
+        })        
+    })
 })
 
-
-io.on("canvasInfo",(message)=>{
-    console.log("hewo")
-})
 
 app.use(express.static(publicPath))
 
 server.listen(port, () => {
     console.log(`listening to ${port}`);
     console.log(`access through: http://localhost:4000/canvases.html`)
-    console.log('http://172.17.52.77:4000 or run command "npm run browse"')
 })

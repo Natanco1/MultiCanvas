@@ -22,10 +22,10 @@ body{
   position: absolute;
 }
 
-#panel1 {
+/* #panel1 {
   width: 100vw!important;
   height: 100vh!important;
-}
+} */
 
 #display{
   display: flex;
