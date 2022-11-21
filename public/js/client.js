@@ -13,16 +13,16 @@ let x;
 let y;
 let w;
 let h;
-let group;
+let group = [];
 const fov = 30;
 const fullWidth = window.innerWidth;
 const fullHeight = window.innerHeight;
 const container = document.createElement('div')
 container.setAttribute('class','container')
-const panel1 = document.createElement('canvas')
-panel1.setAttribute('id','panel1')
+const panel = document.createElement('canvas')
+panel.setAttribute('id','panel1')
 document.body.appendChild(container)
-container.appendChild(panel1)
+container.appendChild(panel)
 //page creation
 socket.on('clientConnection',(message)=>{
     window.history.replaceState('', '', 'http://localhost:4000'+`?${socket.id}`);
@@ -31,14 +31,21 @@ socket.on('clientConnection',(message)=>{
     w = message.totW
     h = message.totH
     group = message.totGroup
-    console.log(group.objects)
-    group.objects.forEach((element)=>{
-        
+    console.log(group)
+    group.forEach((groupElement)=>{
+        let objectInGroupLeft = groupElement.left + x + w/2
+        let objectInGroupTop = groupElement.top + y + h/2
+        console.log(objectInGroupLeft)
+        console.log(objectInGroupTop)
+        console.log(groupElement.width)
+        console.log(groupElement.height)
+
+
     })
-    panel1.style.width = `${w}px`   
-    panel1.style.height = `${h}px` 
-    panel1.style.left = `${x}px` 
-    panel1.style.top = `${y}px` 
+    panel.style.width = `${w}px`   
+    panel.style.height = `${h}px` 
+    panel.style.left = `${x}px` 
+    panel.style.top = `${y}px` 
 })
 
 //renderer

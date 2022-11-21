@@ -3,3 +3,5 @@ class Server {
         this.clients = clients
     }
 }
+
+module.exports = Server;
