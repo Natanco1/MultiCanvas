@@ -20,7 +20,7 @@ const fullHeight = window.innerHeight;
 const container = document.createElement('div')
 container.setAttribute('class','container')
 const panel = document.createElement('canvas')
-panel.setAttribute('id','panel1')
+panel.setAttribute('id','panel')
 document.body.appendChild(container)
 container.appendChild(panel)
 //page creation
@@ -39,8 +39,6 @@ socket.on('clientConnection',(message)=>{
         console.log(objectInGroupTop)
         console.log(groupElement.width)
         console.log(groupElement.height)
-
-
     })
     panel.style.width = `${w}px`   
     panel.style.height = `${h}px` 
@@ -50,8 +48,8 @@ socket.on('clientConnection',(message)=>{
 
 //renderer
 
-const renderer1 = new THREE.WebGLRenderer({ canvas: panel1});
-renderer1.setSize(panel1.clientHeight,panel1.clientWidth);
+const renderer1 = new THREE.WebGLRenderer({ canvas: panel});
+renderer1.setSize(panel.clientHeight,panel.clientWidth);
 
 
 //scene
@@ -73,7 +71,7 @@ scene.add( light );
 
 const camera1 = new THREE.PerspectiveCamera(
     fov,
-    panel1.clientWidth/panel1.clientHeight,
+    panel.clientWidth/panel.clientHeight,
     0.1,
     1000
 );
