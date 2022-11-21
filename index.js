@@ -1,3 +1,4 @@
+const Server = require("./entities/server.entity");
 const path = require('path');
 const http = require('http');
 const express = require('express');
@@ -14,12 +15,6 @@ let w;
 let h;
 
 let connected = 0;
-
-class Server {
-    constructor(clients = {id, position, rotation, number}){
-        this.clients = clients
-    }
-}
 
 let TheServer = new Server({})
 

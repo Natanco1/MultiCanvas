@@ -36,7 +36,7 @@ upLoad.addEventListener('click',()=>{
         y: info.top,
         w: info.width,
         h: info.height
-    })    
+    })   
     location.assign('http://localhost:4000')
 })
 
