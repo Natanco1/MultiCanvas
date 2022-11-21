@@ -23,7 +23,7 @@ newObject.addEventListener('click', ()=>{
         rectangle.id = canvas._objects.length+1
     }
     canvas.add(rectangle)
-    console.log(rectangle.id)
+    /* console.log(rectangle.id) */
 })
 
 
@@ -31,14 +31,26 @@ const upLoad = document.getElementById("uploadButton");
 upLoad.addEventListener('click',()=>{
     const group = new fabric.Group(canvas._objects)
     const info = canvas.getActiveObject()
-    socket.emit('canvasInfo',{
+    group._objects.forEach((groupElement)=>{
+        let objectInGroupLeft = groupElement.left +info.left + info.width/2
+        let objectInGroupTop = groupElement.top + info.top + info.height/2
+        console.log(objectInGroupLeft)
+        console.log(objectInGroupTop)
+        console.log(groupElement.width)
+        console.log(groupElement.height)
+        console.log('---------')
+    })
+    /* socket.emit('canvasInfo',{
         x: info.left,
         y: info.top,
         w: info.width,
         h: info.height,
         objects: group
     })    
-    location.assign('http://localhost:4000')
+    location.assign('http://localhost:4000') 
+    let objectInGroupLeft = objectLeft + groupLeft + group.width / 2
+    let objectInGroupTop = objectTop + groupTop + group.height / 2
+    */
 })
 
 const hName = document.getElementById("name")
