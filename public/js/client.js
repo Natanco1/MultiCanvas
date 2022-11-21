@@ -33,27 +33,12 @@ socket.on('clientConnection',(message)=>{
     group = message.totGroup
     console.log(group.objects)
     group.objects.forEach((element)=>{
-        const left = element.left+x+w/2
-        const top = element.top+y+h/2
-        console.log(left)
-        console.log(top)
+        
     })
-    panel1.style.width = `${w}px`
+    panel1.style.width = `${w}px`   
     panel1.style.height = `${h}px` 
     panel1.style.left = `${x}px` 
     panel1.style.top = `${y}px` 
- /*    console.log(x)
-    console.log(panel1.left)
-    console.log('')
-    console.log(y)
-    console.log(panel1.top)
-    console.log('')
-    console.log(w)
-    console.log(panel1.width)
-    console.log('')
-    console.log(h)
-    console.log(panel1.height)
-    console.log('') */
 })
 
 //renderer
