@@ -23,7 +23,6 @@ socket.on('clientConnection',(message)=>{
     let w = message.totW
     let h = message.totH
     group = message.totGroup
-    console.log(group)
     let i = 0
     
     //scene
@@ -60,10 +59,11 @@ socket.on('clientConnection',(message)=>{
         panel.setAttribute('class','panel')
         panel.setAttribute('id',`panel${i}`)
         document.body.appendChild(container)
-        panel.style.width = `${groupElement.width}px`   
-        panel.style.height = `${groupElement.height}px` 
+        panel.style.width = `${groupElement.width*groupElement.scaleX}px`   
+        panel.style.height = `${groupElement.height*groupElement.scaleY}px` 
         panel.style.left = `${objectInGroupLeft}px` 
         panel.style.top = `${objectInGroupTop}px` 
+        //panel.style.transform = `rotate(${groupElement.angle}deg)`
         container.appendChild(panel)
         canvases.push(panel)
         i++
