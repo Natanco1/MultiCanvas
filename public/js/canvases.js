@@ -30,6 +30,10 @@ const upLoad = document.getElementById("uploadButton");
 upLoad.addEventListener('click',()=>{
     const group = new fabric.Group(canvas._objects)
     const info = canvas.getActiveObject()
+    group._objects.forEach((elementos)=>{
+        console.log(elementos.width)
+        console.log(elementos.height)
+    })
 
     socket.emit('canvasInfo',{
         xTot: info.left,
@@ -38,7 +42,7 @@ upLoad.addEventListener('click',()=>{
         hTot: info.height,
         objects: group._objects
     })
-    location.assign('http://localhost:4000') 
+    //location.assign('http://localhost:4000') 
 })
 
 const hName = document.getElementById("name")

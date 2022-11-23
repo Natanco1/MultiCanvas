@@ -31,10 +31,20 @@ socket.on('clientConnection',(message)=>{
     scene.background = new THREE.Color('#282828');
 
     //objects
-    const gltf = new GLTFLoader();
+    /* const gltf = new GLTFLoader();
     gltf.load('../assets/scene.gltf', (gltfScene) => {
     scene.add(gltfScene.scene);
-    });
+    }); */
+    const geometry = new THREE.BoxGeometry(1,1,1);
+    const mat = new THREE.MeshStandardMaterial({
+        color: 0x00ff00,
+        wireframe: true
+    })
+
+    const cube = new THREE.Mesh(geometry, mat);
+    scene.add(cube)
+
+
 
     //light
     const light = new THREE.AmbientLight( 0x404040, 6 );
