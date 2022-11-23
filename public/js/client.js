@@ -9,124 +9,110 @@ let socket = io()
 const cameraX = 0;
 const cameraY = 0;
 const cameraZ = 5;
-let x;
-let y;
-let w;
-let h;
+let group = [];
+let canvases = [];
 const fov = 30;
 const fullWidth = window.innerWidth;
 const fullHeight = window.innerHeight;
-const container = document.createElement('div')
-container.setAttribute('class','container')
-const panel1 = document.createElement('canvas')
-panel1.setAttribute('id','panel1')
-document.body.appendChild(container)
-container.appendChild(panel1)
+
 //page creation
 socket.on('clientConnection',(message)=>{
     window.history.replaceState('', '', 'http://localhost:4000'+`?${socket.id}`);
-    x = message.totX
-    y = message.totY
-    w = message.totW
-    h = message.totH
-   
-    panel1.style.width = `${w}px`
-    panel1.style.height = `${h}px` 
-    panel1.style.left = `${x}px` 
-    panel1.style.top = `${y}px` 
-    console.log(x)
-    console.log(panel1.left)
-    console.log('')
-    console.log(y)
-    console.log(panel1.top)
-    console.log('')
-    console.log(w)
-    console.log(panel1.width)
-    console.log('')
-    console.log(h)
-    console.log(panel1.height)
-    console.log('')
-})
+    let x = message.totX
+    let y = message.totY
+    let w = message.totW
+    let h = message.totH
+    group = message.totGroup
+    console.log(group)
+    let i = 0
+    
+    //scene
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color('#282828');
 
-//renderer
+    //objects
+    /* const gltf = new GLTFLoader();
+    gltf.load('../assets/scene.gltf', (gltfScene) => {
+    scene.add(gltfScene.scene);
+    }); */
+    const geometry = new THREE.BoxGeometry(1,1,1);
+    const mat = new THREE.MeshStandardMaterial({
+        color: 0x00ff00,
+        wireframe: true
+    })
 
-const renderer1 = new THREE.WebGLRenderer({ canvas: panel1});
-renderer1.setSize(panel1.clientHeight,panel1.clientWidth);
+    const cube = new THREE.Mesh(geometry, mat);
+    scene.add(cube)
 
 
-//scene
+
+    //light
+    const light = new THREE.AmbientLight( 0x404040, 6 );
+    scene.add( light );
+    
+
+    group.forEach((groupElement)=>{
+        let objectInGroupLeft = groupElement.left + x + w/2
+        let objectInGroupTop = groupElement.top + y + h/2
+        const container = document.createElement('div')
+        container.setAttribute('class','container')
+        const panel = document.createElement('canvas')
+        panel.setAttribute('class','panel')
+        panel.setAttribute('id',`panel${i}`)
+        document.body.appendChild(container)
+        panel.style.width = `${groupElement.width}px`   
+        panel.style.height = `${groupElement.height}px` 
+        panel.style.left = `${objectInGroupLeft}px` 
+        panel.style.top = `${objectInGroupTop}px` 
+        container.appendChild(panel)
+        canvases.push(panel)
+        i++
+    })
 
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color('#282828');
 
+    canvases.forEach((canvasElement)=>{
+        const sX = canvasElement.getBoundingClientRect().left - x
+        const sY = canvasElement.getBoundingClientRect().top - y
+        //renderer
+        const renderer1 = new THREE.WebGLRenderer({ canvas: canvasElement});
+        renderer1.setSize(canvasElement.clientWidth,canvasElement.clientHeight);
 
-//light
+        //camera
 
+        const camera1 = new THREE.PerspectiveCamera(
+            fov,
+            canvasElement.clientWidth/canvasElement.clientHeight,
+            0.1,
+            1000
+        );
+        camera1.position.set(cameraX,cameraY,cameraZ);
+        camera1.setViewOffset(w,h,sX,sY,canvasElement.clientWidth,canvasElement.clientHeight)
 
-const light = new THREE.AmbientLight( 0x404040, 4 ); // soft white light
-scene.add( light );
+        //controls
 
+        const control1 = new OrbitControls( camera1, renderer1.domElement);
+        control1.enableDamping = true;
+        control1.enablePan = false;
+        control1.addEventListener('change', () => {
+            socket.emit('serverUpdate', {
+                position: camera1.position,
+                rotation: camera1.rotation,
+            })
+        })
 
-//camera
+        socket.on('clientUpdate', (message) => {
+            camera1.position.copy(message.newPosition)
+            camera1.rotation.copy(message.newRotation)
+        })
 
+        //animate loop
 
-const camera1 = new THREE.PerspectiveCamera(
-    fov,
-    panel1.clientWidth/panel1.clientHeight,
-    0.1,
-    1000
-);
-camera1.position.set(cameraX,cameraY,cameraZ);
+        function animate() {
+            control1.update();
+            renderer1.render(scene, camera1);
+        }
 
-
-//controls
-
-
-const control1 = new OrbitControls( camera1, renderer1.domElement);
-control1.enableDamping = true;
-control1.enablePan = false;
-control1.addEventListener('change', () => {
-    socket.emit('serverUpdate', {
-        position: camera1.position,
-        rotation: camera1.rotation,
+        renderer1.setAnimationLoop(animate);  
     })
 })
-
-socket.on('clientUpdate', (message) => {
-    camera1.position.copy(message.newPosition)
-    camera1.rotation.copy(message.newRotation)
-})
-
-
-//objects
-const gltf = new GLTFLoader();
-gltf.load('../assets/scene.gltf', (gltfScene) => {
-    
-    scene.add(gltfScene.scene);
-});
-
-//geometries
-
-/* palette: #0C0032 #190061 #240090 #3500D3 #282828 */
-/* const texturer = new THREE.TextureLoader();
-const sNormalColor = texturer.load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPX6DfAsj9ln5yS3gpgzyw6RdvreTTM4QVqetQ1EP7R0oSu-XzcZq7QFPZvieZy1br5l0&usqp=CAU");
-
-const sGeomnetry = new THREE.BoxGeometry(1,1,1)
-const sMaterial = new THREE.MeshStandardMaterial({
-    map: sNormalColor,
-})
-const sphere = new THREE.Mesh(sGeomnetry,sMaterial);
-scene.add(sphere);
- */
-
-
-//animate loop
-
-
-function animate() {
-    control1.update();
-    renderer1.render(scene, camera1);
-}
-
-renderer1.setAnimationLoop(animate); 

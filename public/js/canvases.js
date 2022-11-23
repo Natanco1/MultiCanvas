@@ -4,7 +4,7 @@ const canvas = new fabric.Canvas('mog', {
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight
 });
-
+const group = new fabric.Group(canvas._objects)
 
 const newObject = document.getElementById("addButton");
 newObject.addEventListener('click', ()=>{
@@ -23,21 +23,26 @@ newObject.addEventListener('click', ()=>{
         rectangle.id = canvas._objects.length+1
     }
     canvas.add(rectangle)
-    console.log(rectangle.id)
+    /* console.log(rectangle.id) */
 })
-
 
 const upLoad = document.getElementById("uploadButton");
 upLoad.addEventListener('click',()=>{
-    /* const group = new fabric.Group(canvas._objects) */
+    
     const info = canvas.getActiveObject()
+    group._objects.forEach((elementos)=>{
+        /* console.log(elementos.width)
+        console.log(elementos.height) */
+    })
+
     socket.emit('canvasInfo',{
-        x: info.left,
-        y: info.top,
-        w: info.width,
-        h: info.height
-    })   
-    location.assign('http://localhost:4000')
+        xTot: info.left,
+        yTot: info.top,
+        wTot: info.width,
+        hTot: info.height,
+        objects: group._objects
+    })
+    location.assign('http://localhost:4000') 
 })
 
 const hName = document.getElementById("name")
@@ -56,6 +61,14 @@ function change(obj){
     if(obj.target === null){
         void(0)
     } else {
+       /*  group._objects.forEach((groupElement)=>{
+            if(obj.target.id == groupElement.id){
+                groupElement.left = obj.target.left
+                groupElement.top = obj.target.top
+                groupElement.width = obj.target.width
+                groupElement.height = obj.target.height
+            }
+        }) */
         hName.innerHTML = `name: ${obj.target.id}`
         hX.innerHTML = `x: ${obj.target.left.toFixed(3)}`
         hY.innerHTML = `y: ${obj.target.top.toFixed(3)}`

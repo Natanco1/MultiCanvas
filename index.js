@@ -3,7 +3,6 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
-const { TorusGeometry } = require('three');
 const publicPath = path.join(__dirname, './public');
 const port = 4000
 let app = express();
@@ -13,7 +12,7 @@ let x;
 let y;
 let w;
 let h;
-
+let objects;
 let connected = 0;
 
 let TheServer = new Server({})
@@ -26,16 +25,18 @@ io.on('connection', (socket) => {
     connected++;
     TheServer.clients.number = connected;
     socket.on('canvasInfo', (message)=>{
-        x = message.x
-        y = message.y 
-        w = message.w
-        h = message.h
+        x = message.xTot
+        y = message.yTot 
+        w = message.wTot
+        h = message.hTot
+        objects = message.objects
     })
     io.emit('clientConnection', {
         totX:x, 
         totY:y,
         totW:w,
         totH:h,
+        totGroup:objects
     })
 
     socket.on('disconnect', () => {
