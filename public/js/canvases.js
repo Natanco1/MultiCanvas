@@ -4,7 +4,7 @@ const canvas = new fabric.Canvas('mog', {
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight
 });
-
+const group = new fabric.Group(canvas._objects)
 
 const newObject = document.getElementById("addButton");
 newObject.addEventListener('click', ()=>{
@@ -28,11 +28,11 @@ newObject.addEventListener('click', ()=>{
 
 const upLoad = document.getElementById("uploadButton");
 upLoad.addEventListener('click',()=>{
-    const group = new fabric.Group(canvas._objects)
+    
     const info = canvas.getActiveObject()
     group._objects.forEach((elementos)=>{
-        console.log(elementos.width)
-        console.log(elementos.height)
+        /* console.log(elementos.width)
+        console.log(elementos.height) */
     })
 
     socket.emit('canvasInfo',{
@@ -42,7 +42,7 @@ upLoad.addEventListener('click',()=>{
         hTot: info.height,
         objects: group._objects
     })
-    //location.assign('http://localhost:4000') 
+    location.assign('http://localhost:4000') 
 })
 
 const hName = document.getElementById("name")
@@ -61,6 +61,14 @@ function change(obj){
     if(obj.target === null){
         void(0)
     } else {
+       /*  group._objects.forEach((groupElement)=>{
+            if(obj.target.id == groupElement.id){
+                groupElement.left = obj.target.left
+                groupElement.top = obj.target.top
+                groupElement.width = obj.target.width
+                groupElement.height = obj.target.height
+            }
+        }) */
         hName.innerHTML = `name: ${obj.target.id}`
         hX.innerHTML = `x: ${obj.target.left.toFixed(3)}`
         hY.innerHTML = `y: ${obj.target.top.toFixed(3)}`
