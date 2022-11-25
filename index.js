@@ -12,6 +12,7 @@ let x;
 let y;
 let w;
 let h;
+let choice;
 let objects;
 let connected = 0;
 
@@ -25,6 +26,7 @@ io.on('connection', (socket) => {
     connected++;
     TheServer.clients.number = connected;
     socket.on('canvasInfo', (message)=>{
+        choice = message.uChoice
         x = message.xTot
         y = message.yTot 
         w = message.wTot
@@ -32,6 +34,7 @@ io.on('connection', (socket) => {
         objects = message.objects
     })
     io.emit('clientConnection', {
+        uChoice:choice,
         totX:x, 
         totY:y,
         totW:w,

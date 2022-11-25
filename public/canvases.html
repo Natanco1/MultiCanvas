@@ -9,20 +9,23 @@
 </head>
 <body>
     <canvas id="mog"></canvas>
-    <input type="button" value="add object" class="button" id="addButton">
-    <input type="button" value="upload" id="uploadButton" class="button">
+    <div id="mainButtons">
+        <input type="button" value="add object" class="button" id="addButton">
+        <input type="button" value="upload" id="uploadButton" class="button">
+    </div>
     <div id="display">
         <div id="name"></div>
         <br>
         <div id="x"></div>
-    
         <div id="y"></div>
         <br>
         <div id="width"></div>
-        <br>
         <div id="height"></div>
-        <!-- <br>
-        <div id="angle"></div> -->
+    </div>
+    <div id="choice">
+        <button class="anatomyButton" id="brain">brain</button>
+        <button class="anatomyButton" id="skeleton">skeleton</button>
+        <button class="anatomyButton" id="face">face</button>
     </div>
 
     <script src="lib/fabric.min.js"></script>

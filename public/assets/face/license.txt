@@ -1,0 +1,11 @@
+Model Information:
+* title:	Man Hummus
+* source:	https://sketchfab.com/3d-models/man-hummus-f799d3a3ef4045778f6af8a711646ad2
+* author:	AnatomyNUIG (https://sketchfab.com/AnatomyNUIG)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Man Hummus" (https://sketchfab.com/3d-models/man-hummus-f799d3a3ef4045778f6af8a711646ad2) by AnatomyNUIG (https://sketchfab.com/AnatomyNUIG) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -8,26 +8,33 @@ body{
   height: 100vh!important;
 }
 
-#addButton{
-  top: 80%;
-  left: 55%;
-}
 
-#uploadButton{
-  top: 80%;
-  left: 45%;
-}
-
-.button{
+#choice{
+  display: flex;
+  flex-direction: row;
   position: absolute;
+  top: 85%;
+  left: 49%;
+  gap: 10px;
+}
+
+
+
+#mainButtons{
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  gap: 10px;
 }
 
 .container {
   position: absolute;
+  outline: none;
 }
 
 .panel {
   position: relative;
+  outline: none;
 }
 
 #display{

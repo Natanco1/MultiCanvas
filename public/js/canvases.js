@@ -1,5 +1,50 @@
 let socket = io()
 
+
+const hName = document.getElementById("name")
+const hX = document.getElementById("x")
+const hY = document.getElementById("y")
+const hWidth = document.getElementById("width")
+const hHeight = document.getElementById("height") 
+const brain = document.getElementById("brain")
+const skeleton = document.getElementById("skeleton")
+const face = document.getElementById("face")
+let choice = 0;
+
+
+brain.addEventListener("click",(button)=>{
+   skeleton.disabled = true
+   face.disabled = true
+   choice = 1
+   brain.addEventListener('click',()=>{
+        skeleton.disabled = false
+        face.disabled = false
+        choice = 0
+   })
+})
+skeleton.addEventListener("click",(button)=>{
+    brain.disabled = true
+    face.disabled = true
+    choice = 2
+    skeleton.addEventListener('click',()=>{
+        brain.disabled = false
+        face.disabled = false
+        choice = 0
+    })
+})
+face.addEventListener("click",(button)=>{
+    skeleton.disabled = true
+    brain.disabled = true
+    choice = 3
+    face.addEventListener('click',()=>{
+        skeleton.disabled = false
+        brain.disabled = false
+        choice = 0
+    })
+})
+
+
+
 const canvas = new fabric.Canvas('mog', {
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight
@@ -29,28 +74,21 @@ newObject.addEventListener('click', ()=>{
 
 const upLoad = document.getElementById("uploadButton");
 upLoad.addEventListener('click',()=>{
-    
-    const info = canvas.getActiveObject()
-    group._objects.forEach((elementos)=>{
-        console.log(elementos.angle)
-    })
-
-    socket.emit('canvasInfo',{
-        xTot: info.left,
-        yTot: info.top,
-        wTot: info.width,
-        hTot: info.height,
-        objects: group._objects
-    })
-    location.assign('http://localhost:4000') 
+    if(choice == 0) {
+        console.log("please select a model")
+    }else {
+        const info = canvas.getActiveObject()
+        socket.emit('canvasInfo',{
+            uChoice: choice,
+            xTot: info.left,
+            yTot: info.top,
+            wTot: info.width,
+            hTot: info.height,
+            objects: group._objects
+        })
+        location.assign('http://localhost:4000')
+    } 
 })
-
-const hName = document.getElementById("name")
-const hX = document.getElementById("x")
-const hY = document.getElementById("y")
-const hWidth = document.getElementById("width")
-const hHeight = document.getElementById("height") 
-//const hAngle = document.getElementById("angle") 
 
 canvas.on({
     'object:moving': change,
@@ -67,7 +105,6 @@ function change(obj){
         hY.innerHTML = `y: ${obj.target.top.toFixed(3)}`
         hWidth.innerHTML = `width: ${(obj.target.scaleX*obj.target.width).toFixed(3)}`
         hHeight.innerHTML = `height: ${(obj.target.scaleY*obj.target.height).toFixed(3)}`
-        //hAngle.innerHTML = `angle: ${(obj.target.angle).toFixed(3)}`
     }
     
 }
