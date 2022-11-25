@@ -52,9 +52,11 @@ io.on('connection', (socket) => {
     })
 
     socket.on('serverUpdate', (message) =>{
+        TheServer.clients.panning = message.panning
         TheServer.clients.position = message.position
         TheServer.clients.rotation = message.rotation
         io.emit('clientUpdate', {
+            newPan: TheServer.clients.panning,
             newPosition: TheServer.clients.position,  
             newRotation: TheServer.clients.rotation,
         })

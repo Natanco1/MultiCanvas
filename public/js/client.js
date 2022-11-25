@@ -45,7 +45,6 @@ socket.on('clientConnection',(message)=>{
     } else if (choice == 2){
         gltf.load('../assets/skeleton/scene.gltf', (gltfScene) => {
             scene.add(gltfScene.scene);
-            console.log(gltfScene.scene.position)
             bb.setFromObject(gltfScene.scene)
         });
     } else if (choice == 3){
@@ -108,9 +107,10 @@ socket.on('clientConnection',(message)=>{
 
         const control1 = new OrbitControls( camera1, renderer1.domElement);
         control1.enableDamping = true;
-        control1.enablePan = false;
+        control1.enablePan = true;
         control1.addEventListener('change', () => {
             socket.emit('serverUpdate', {
+                panning: control1.target,
                 position: camera1.position,
                 rotation: camera1.rotation,
             })
@@ -118,6 +118,7 @@ socket.on('clientConnection',(message)=>{
         bb.getCenter(control1.target)
 
         socket.on('clientUpdate', (message) => {
+            control1.target.copy(message.newPan)
             camera1.position.copy(message.newPosition)
             camera1.rotation.copy(message.newRotation)
         })
