@@ -2,44 +2,47 @@ let socket = io()
 
 
 const hName = document.getElementById("name")
-const hX = document.getElementById("x")
+let hX = document.getElementById("x")
 const hY = document.getElementById("y")
 const hWidth = document.getElementById("width")
 const hHeight = document.getElementById("height") 
 const brain = document.getElementById("brain")
 const skeleton = document.getElementById("skeleton")
 const face = document.getElementById("face")
-let choice = 0;
+const alert = document.getElementById("alert")
+const choice = document.getElementById("choice")
+
+let index = 0;
 
 
 brain.addEventListener("click",(button)=>{
    skeleton.disabled = true
    face.disabled = true
-   choice = 1
+   index = 1
    brain.addEventListener('click',()=>{
         skeleton.disabled = false
         face.disabled = false
-        choice = 0
+        index = 0
    })
 })
 skeleton.addEventListener("click",(button)=>{
     brain.disabled = true
     face.disabled = true
-    choice = 2
+    index = 2
     skeleton.addEventListener('click',()=>{
         brain.disabled = false
         face.disabled = false
-        choice = 0
+        index = 0
     })
 })
 face.addEventListener("click",(button)=>{
     skeleton.disabled = true
     brain.disabled = true
-    choice = 3
+    index = 3
     face.addEventListener('click',()=>{
         skeleton.disabled = false
         brain.disabled = false
-        choice = 0
+        index = 0
     })
 })
 
@@ -69,17 +72,22 @@ newObject.addEventListener('click', ()=>{
         rectangle.id = canvas._objects.length+1
     }
     canvas.add(rectangle)
-    /* console.log(rectangle.id) */
 })
 
 const upLoad = document.getElementById("uploadButton");
 upLoad.addEventListener('click',()=>{
-    if(choice == 0) {
-        console.log("please select a model")
+    if(index == 0) {
+        choice.style.outline = '1px solid red'
+        choice.style.padding = '5px'
+        alert.innerHTML = "select a model please"
+        setTimeout(()=>{
+            choice.style.outline = '0px'
+            alert.innerHTML = ''
+        },5000)
     }else {
         const info = canvas.getActiveObject()
         socket.emit('canvasInfo',{
-            uChoice: choice,
+            uChoice: index,
             xTot: info.left,
             yTot: info.top,
             wTot: info.width,
@@ -93,7 +101,9 @@ upLoad.addEventListener('click',()=>{
 canvas.on({
     'object:moving': change,
     'object:scaling': change,
-    'mouse:over': change
+    'mouse:over': change,
+    'mouse:dblclick': receiveInput,
+    'mouse:dblclick': receiveInput,
 });
   
 function change(obj){
@@ -106,8 +116,30 @@ function change(obj){
         hWidth.innerHTML = `width: ${(obj.target.scaleX*obj.target.width).toFixed(3)}`
         hHeight.innerHTML = `height: ${(obj.target.scaleY*obj.target.height).toFixed(3)}`
     }
-    
 }
 
+function receiveInput(obj){
+    const wIn = document.getElementById('inputW')
+    const hIn = document.getElementById('inputH') 
+    wIn.style.display = 'block'
+    hIn.style.display = 'block'
+    wIn.addEventListener('keypress',(key)=>{
+        if(key.key == 'Enter'){
+            console.log(obj.target)
+            console.log(wIn.value)
+            obj.target.width = wIn.value*obj.target.scaleX
+            //get width
+        }
+    })
+    hIn.addEventListener('keypress',(key)=>{
+        if(key.key == 'Enter'){
+            console.log(obj.target)
+            console.log(hIn.value)
+            obj.target.height = hIn.value*obj.target.scaleY
+            //get height
+        }
+    })
+
+}
 
 canvas.renderAll();

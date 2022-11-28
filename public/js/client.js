@@ -54,10 +54,7 @@ socket.on('clientConnection',(message)=>{
         });
     }
     
-     
-
-
-
+    
     //light
     const light = new THREE.AmbientLight( 0x404040, 6 );
     scene.add( light );

@@ -8,25 +8,6 @@ body{
   height: 100vh!important;
 }
 
-
-#choice{
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  top: 85%;
-  left: 49%;
-  gap: 10px;
-}
-
-
-
-#mainButtons{
-  position: absolute;
-  top: 80%;
-  left: 50%;
-  gap: 10px;
-}
-
 .container {
   position: absolute;
   outline: none;
@@ -47,9 +28,38 @@ body{
   outline-color: black;
 }
 
+#mainButtons{
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  gap: 10px;
+}
+
+
 #buttons {
   display: flex;
   position: absolute;
   top: 80%;
   left: 50%;
+}
+
+#choice{
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 85%;
+  left: 49%;
+  gap: 10px;
+}
+
+#alert{
+  color: red;
+  position: absolute;
+  top: 90%;
+  left: 49%;
+}
+
+#inputW, #inputH{
+  display: none;
 }
