@@ -127,16 +127,16 @@ function receiveInput(obj){
         if(key.key == 'Enter'){
             console.log(obj.target)
             console.log(wIn.value)
-            obj.target.width = wIn.value*obj.target.scaleX
-            //get width
+            obj.target.scaleX = wIn.value/obj.target.width
+            
         }
     })
     hIn.addEventListener('keypress',(key)=>{
         if(key.key == 'Enter'){
             console.log(obj.target)
             console.log(hIn.value)
-            obj.target.height = hIn.value*obj.target.scaleY
-            //get height
+            obj.target.scaleY = hIn.value/obj.target.height
+            
         }
     })
 
