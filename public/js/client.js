@@ -17,7 +17,6 @@ const fullHeight = window.innerHeight;
 const url = document.location.href.split('?')[1]
 //page creation
 socket.on('clientConnection',(message)=>{
-    console.log(url)
     window.document.title = url
     //window.history.replaceState('', '', 'http://localhost:4000'+`?${socket.id}`);
     let choice = message.uChoice
@@ -41,7 +40,6 @@ socket.on('clientConnection',(message)=>{
     if(choice == 1){
         gltf.load('../assets/brain/scene.gltf', (gltfScene) => {
             scene.add(gltfScene.scene);
-            console.log(gltfScene.scene.position)
             bb.setFromObject(gltfScene.scene)
         });
     } else if (choice == 2){
@@ -61,26 +59,22 @@ socket.on('clientConnection',(message)=>{
     const light = new THREE.AmbientLight( 0x404040, 6 );
     scene.add( light );
     
-
-    group.forEach((groupElement)=>{
-        let objectInGroupLeft = groupElement.left + x + w/2
-        let objectInGroupTop = groupElement.top + y + h/2
-        const container = document.createElement('div')
-        container.setAttribute('class','container')
-        const panel = document.createElement('canvas')
-        panel.setAttribute('class','panel')
-        panel.setAttribute('id',`panel${i}`)
-        document.body.appendChild(container)
-        panel.style.width = `${groupElement.width*groupElement.scaleX}px`   
-        panel.style.height = `${groupElement.height*groupElement.scaleY}px` 
-        panel.style.left = `${objectInGroupLeft}px` 
-        panel.style.top = `${objectInGroupTop}px` 
-        //panel.style.transform = `rotate(${groupElement.angle}deg)`
-        container.appendChild(panel)
-        canvases.push(panel)
-        i++
-    })
-
+    let objectInGroupLeft = group[url].left + x + w/2
+    let objectInGroupTop = group[url].top + y + h/2
+    const container = document.createElement('div')
+    container.setAttribute('class','container')
+    const panel = document.createElement('canvas')
+    panel.setAttribute('class','panel')
+    panel.setAttribute('id',`panel${i}`)
+    document.body.appendChild(container)
+    panel.style.width = `${group[url].width*group[url].scaleX}px`   
+    panel.style.height = `${group[url].height*group[url].scaleY}px` 
+    panel.style.left = `${objectInGroupLeft}px` 
+    panel.style.top = `${objectInGroupTop}px` 
+    //panel.style.transform = `rotate(${groupElement.angle}deg)`
+    container.appendChild(panel)
+    canvases.push(panel)
+    i++
 
 
     canvases.forEach((canvasElement)=>{
