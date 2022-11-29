@@ -95,7 +95,11 @@ upLoad.addEventListener('click',()=>{
             objects: group._objects
         })
         info._objects.forEach((el)=>{
-            window.open(`http://localhost:4000?${k}`,'_blank')
+            if(k==0){
+                window.location.href = (`http://localhost:4000?${k}`)    
+            } else {
+                window.open(`http://localhost:4000?${k}`,'_blank')
+            }
             k++
         })
         
