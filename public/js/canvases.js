@@ -11,7 +11,6 @@ const skeleton = document.getElementById("skeleton")
 const face = document.getElementById("face")
 const alert = document.getElementById("alert")
 const choice = document.getElementById("choice")
-
 let index = 0;
 
 

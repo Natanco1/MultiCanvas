@@ -14,9 +14,11 @@ let canvases = [];
 const fov = 30;
 const fullWidth = window.innerWidth;
 const fullHeight = window.innerHeight;
-
+const url = document.location.href.split('?')[1]
 //page creation
 socket.on('clientConnection',(message)=>{
+    console.log(url)
+    window.document.title = url
     //window.history.replaceState('', '', 'http://localhost:4000'+`?${socket.id}`);
     let choice = message.uChoice
     let x = message.totX
