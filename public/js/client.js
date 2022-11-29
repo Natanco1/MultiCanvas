@@ -17,7 +17,7 @@ const fullHeight = window.innerHeight;
 
 //page creation
 socket.on('clientConnection',(message)=>{
-    window.history.replaceState('', '', 'http://localhost:4000'+`?${socket.id}`);
+    //window.history.replaceState('', '', 'http://localhost:4000'+`?${socket.id}`);
     let choice = message.uChoice
     let x = message.totX
     let y = message.totY

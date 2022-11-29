@@ -86,6 +86,7 @@ upLoad.addEventListener('click',()=>{
         },5000)
     }else {
         const info = canvas.getActiveObject()
+        let k = 0;
         socket.emit('canvasInfo',{
             uChoice: index,
             xTot: info.left,
@@ -94,7 +95,11 @@ upLoad.addEventListener('click',()=>{
             hTot: info.height,
             objects: group._objects
         })
-        location.assign('http://localhost:4000')
+        info._objects.forEach((el)=>{
+            window.open(`http://localhost:4000?${k}`,'_blank')
+            k++
+        })
+        
     } 
 })
 
