@@ -69,13 +69,12 @@ socket.on('clientConnection',(message)=>{
     document.body.appendChild(container)
     panel.style.width = `${group[url].width*group[url].scaleX}px`   
     panel.style.height = `${group[url].height*group[url].scaleY}px` 
-    panel.style.left = `${objectInGroupLeft}px` 
-    panel.style.top = `${objectInGroupTop}px` 
+    /* panel.style.left = `${objectInGroupLeft}px` 
+    panel.style.top = `${objectInGroupTop}px`  */
     //panel.style.transform = `rotate(${groupElement.angle}deg)`
     container.appendChild(panel)
     canvases.push(panel)
     i++
-
 
     canvases.forEach((canvasElement)=>{
         const sX = canvasElement.getBoundingClientRect().left - x
@@ -83,7 +82,7 @@ socket.on('clientConnection',(message)=>{
         //renderer
         const renderer1 = new THREE.WebGLRenderer({ canvas: canvasElement});
         renderer1.setSize(canvasElement.clientWidth,canvasElement.clientHeight);
-
+        renderer1.setPixelRatio(window.devicePixelRatio)
         //camera
 
         const camera1 = new THREE.PerspectiveCamera(
@@ -94,8 +93,10 @@ socket.on('clientConnection',(message)=>{
         );
         camera1.position.set(cameraX,cameraY,cameraZ);
         camera1.lookAt(scene.position)
-        camera1.setViewOffset(w,h,sX,sY,canvasElement.clientWidth,canvasElement.clientHeight)
-
+        console.log(camera1.setViewOffset(window.innerWidth,window.innerHeight,sX,sY,canvasElement.clientWidth,canvasElement.clientHeight))
+        panel.style.width = `${window.innerWidth}px`   
+        panel.style.height = `${window.innerHeight}px`
+        camera1.aspect = window.innerWidth/window.innerHeight
         //controls
 
         const control1 = new OrbitControls( camera1, renderer1.domElement);

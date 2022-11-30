@@ -136,7 +136,6 @@ function receiveInput(obj){
             console.log(obj.target)
             console.log(wIn.value)
             obj.target.scaleX = wIn.value/obj.target.width
-            
         }
     })
     hIn.addEventListener('keypress',(key)=>{
@@ -144,7 +143,6 @@ function receiveInput(obj){
             console.log(obj.target)
             console.log(hIn.value)
             obj.target.scaleY = hIn.value/obj.target.height
-            
         }
     })
 
