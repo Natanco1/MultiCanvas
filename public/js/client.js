@@ -11,6 +11,8 @@ const cameraY = 0;
 const cameraZ = 50;
 let group = [];
 let canvases = [];
+let coordinatesX = []
+let coordinatesY = []
 const fov = 30;
 const fullWidth = window.innerWidth;
 const fullHeight = window.innerHeight;
@@ -61,6 +63,8 @@ socket.on('clientConnection',(message)=>{
     
     let objectInGroupLeft = group[url].left + x + w/2
     let objectInGroupTop = group[url].top + y + h/2
+    coordinatesX.push(objectInGroupLeft)
+    coordinatesY.push(objectInGroupTop)
     const container = document.createElement('div')
     container.setAttribute('class','container')
     const panel = document.createElement('canvas')
@@ -69,14 +73,16 @@ socket.on('clientConnection',(message)=>{
     document.body.appendChild(container)
     panel.style.width = `${group[url].width*group[url].scaleX}px`   
     panel.style.height = `${group[url].height*group[url].scaleY}px` 
-    /* panel.style.left = `${objectInGroupLeft}px` 
-    panel.style.top = `${objectInGroupTop}px`  */
     //panel.style.transform = `rotate(${groupElement.angle}deg)`
     container.appendChild(panel)
     canvases.push(panel)
     i++
 
     canvases.forEach((canvasElement)=>{
+        let z=0
+        console.log(coordinatesX[z])
+        console.log(coordinatesY[z])
+        
         const sX = canvasElement.getBoundingClientRect().left - x
         const sY = canvasElement.getBoundingClientRect().top - y
         //renderer
@@ -93,10 +99,11 @@ socket.on('clientConnection',(message)=>{
         );
         camera1.position.set(cameraX,cameraY,cameraZ);
         camera1.lookAt(scene.position)
-        console.log(camera1.setViewOffset(window.innerWidth,window.innerHeight,sX,sY,canvasElement.clientWidth,canvasElement.clientHeight))
+        camera1.setViewOffset(window.innerWidth,window.innerHeight,coordinatesX[z],coordinatesY[z],canvasElement.clientWidth,canvasElement.clientHeight)
         panel.style.width = `${window.innerWidth}px`   
         panel.style.height = `${window.innerHeight}px`
         camera1.aspect = window.innerWidth/window.innerHeight
+        z++
         //controls
 
         const control1 = new OrbitControls( camera1, renderer1.domElement);
