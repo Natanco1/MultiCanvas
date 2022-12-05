@@ -52,6 +52,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('serverUpdate', (message) =>{
+        TheServer.clients.camera = message.camera
         TheServer.clients.panning = message.panning
         TheServer.clients.position = message.position
         TheServer.clients.rotation = message.rotation
@@ -59,6 +60,7 @@ io.on('connection', (socket) => {
             newPan: TheServer.clients.panning,
             newPosition: TheServer.clients.position,  
             newRotation: TheServer.clients.rotation,
+            newCam: TheServer.clients.camera
         })
     })
 })

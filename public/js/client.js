@@ -68,44 +68,46 @@ socket.on('clientConnection',(message)=>{
     container.setAttribute('class','container')
     const panel = document.createElement('canvas')
     panel.setAttribute('class','panel')
-    panel.setAttribute('id',`panel${i}`)
+    panel.setAttribute('id',`panel${url}`)
     document.body.appendChild(container)
-    panel.style.width = `${group[url].width*group[url].scaleX}px`   
-    panel.style.height = `${group[url].height*group[url].scaleY}px` 
+    panel.style.width = `${window.innerWidth}px`   
+    panel.style.height = `${window.innerHeight}px` 
     //panel.style.transform = `rotate(${groupElement.angle}deg)`
     container.appendChild(panel)
     canvases.push(panel)
-    i++
 
     canvases.forEach((canvasElement)=>{
-        let z=0
-        
         const sX = canvasElement.getBoundingClientRect().left - x
         const sY = canvasElement.getBoundingClientRect().top - y
         //renderer
-        const renderer1 = new THREE.WebGLRenderer({ canvas: canvasElement});
+        const renderer1 = new THREE.WebGLRenderer({canvas: canvasElement});
         renderer1.setSize(canvasElement.clientWidth,canvasElement.clientHeight);
         renderer1.setPixelRatio(window.devicePixelRatio)
         //camera
-
+        console.log(window.devicePixelRatio)
         const camera1 = new THREE.PerspectiveCamera(
             fov,
-            w*devicePixelRatio/h*devicePixelRatio,
+            w/h,
             0.1,
             10000
         );
         camera1.position.set(cameraX,cameraY,cameraZ);
         camera1.lookAt(scene.position)
-        camera1.setViewOffset(window.innerWidth,window.innerHeight,coordinatesX[z],coordinatesY[z],canvasElement.clientWidth,canvasElement.clientHeight)
-        panel.style.width = `${window.innerWidth}px`   
-        panel.style.height = `${window.innerHeight}px`
-        z++
+        //camera1.setViewOffset(w,h,coordinatesX[z],coordinatesY[z],canvasElement.clientWidth,canvasElement.clientHeight)
+        /* panel.style.width = `${window.innerWidth}px`   
+        panel.style.height = `${window.innerHeight}px` */
+        
+       
+        
+        
+        
         //controls 
         const control1 = new OrbitControls( camera1, renderer1.domElement);
         control1.enableDamping = true;
         control1.enablePan = true;
         control1.addEventListener('change', () => {
             socket.emit('serverUpdate', {
+                camera: camera1,
                 panning: control1.target,
                 position: camera1.position,
                 rotation: camera1.rotation,
@@ -114,13 +116,16 @@ socket.on('clientConnection',(message)=>{
         bb.getCenter(control1.target)
 
         socket.on('clientUpdate', (message) => {
+
             control1.target.copy(message.newPan)
             camera1.position.copy(message.newPosition)
             camera1.rotation.copy(message.newRotation)
         })
 
         //animate loop
-
+        console.log(camera1)
+        console.log(scene)
+        console.log(renderer1)
         function animate() {
             control1.update();
             renderer1.render(scene, camera1);

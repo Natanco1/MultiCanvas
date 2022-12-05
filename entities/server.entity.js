@@ -1,5 +1,5 @@
 class Server {
-    constructor(clients = {id, position, rotation, number, panning}){
+    constructor(clients = {id, camera, position, rotation, number, panning}){
         this.clients = clients
     }
 }
