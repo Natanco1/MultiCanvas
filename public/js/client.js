@@ -1,4 +1,3 @@
-
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.module.js";
 import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/loaders/GLTFLoader.js";
@@ -80,8 +79,6 @@ socket.on('clientConnection',(message)=>{
 
     canvases.forEach((canvasElement)=>{
         let z=0
-        console.log(coordinatesX[z])
-        console.log(coordinatesY[z])
         
         const sX = canvasElement.getBoundingClientRect().left - x
         const sY = canvasElement.getBoundingClientRect().top - y
@@ -93,7 +90,7 @@ socket.on('clientConnection',(message)=>{
 
         const camera1 = new THREE.PerspectiveCamera(
             fov,
-            canvasElement.clientWidth/canvasElement.clientHeight,
+            w*devicePixelRatio/h*devicePixelRatio,
             0.1,
             10000
         );
@@ -102,10 +99,8 @@ socket.on('clientConnection',(message)=>{
         camera1.setViewOffset(window.innerWidth,window.innerHeight,coordinatesX[z],coordinatesY[z],canvasElement.clientWidth,canvasElement.clientHeight)
         panel.style.width = `${window.innerWidth}px`   
         panel.style.height = `${window.innerHeight}px`
-        camera1.aspect = window.innerWidth/window.innerHeight
         z++
-        //controls
-
+        //controls 
         const control1 = new OrbitControls( camera1, renderer1.domElement);
         control1.enableDamping = true;
         control1.enablePan = true;
