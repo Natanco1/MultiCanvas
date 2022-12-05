@@ -84,7 +84,6 @@ socket.on('clientConnection',(message)=>{
         renderer1.setSize(canvasElement.clientWidth,canvasElement.clientHeight);
         renderer1.setPixelRatio(window.devicePixelRatio)
         //camera
-        console.log(window.devicePixelRatio)
         const camera1 = new THREE.PerspectiveCamera(
             fov,
             w/h,
@@ -93,13 +92,9 @@ socket.on('clientConnection',(message)=>{
         );
         camera1.position.set(cameraX,cameraY,cameraZ);
         camera1.lookAt(scene.position)
-        //camera1.setViewOffset(w,h,coordinatesX[z],coordinatesY[z],canvasElement.clientWidth,canvasElement.clientHeight)
-        /* panel.style.width = `${window.innerWidth}px`   
-        panel.style.height = `${window.innerHeight}px` */
-        
-       
-        
-        
+        console.log(coordinatesX[0])
+        console.log(coordinatesY[0])
+        camera1.setViewOffset(w,h,coordinatesX[0],coordinatesY[0],group[url].width,group[url].height)
         
         //controls 
         const control1 = new OrbitControls( camera1, renderer1.domElement);
@@ -123,9 +118,6 @@ socket.on('clientConnection',(message)=>{
         })
 
         //animate loop
-        console.log(camera1)
-        console.log(scene)
-        console.log(renderer1)
         function animate() {
             control1.update();
             renderer1.render(scene, camera1);
