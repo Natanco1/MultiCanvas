@@ -63,8 +63,8 @@ newObject.addEventListener('click', ()=>{
         hasRotatingPoint: false,
         left: 10,
         top: 10,
-        width: Math.floor(Math.random()*300)+10,
-        height: Math.floor(Math.random()*300)+10,
+        width: 200,//Math.floor(Math.random()*300)+10,
+        height: 400,//Math.floor(Math.random()*300)+10,
         fill: `rgba(${r},${g},${b},1)`
     })
     if(rectangle.id === ''){

@@ -97,7 +97,7 @@ socket.on('clientConnection',(message)=>{
         camera1.setViewOffset(w,h,coordinatesX[0],coordinatesY[0],group[url].width,group[url].height)
         
         //controls 
-        const control1 = new OrbitControls( camera1, renderer1.domElement);
+        const control1 = new OrbitControls(camera1, renderer1.domElement);
         control1.enableDamping = true;
         control1.enablePan = true;
         control1.addEventListener('change', () => {
